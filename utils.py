@@ -11,8 +11,6 @@ class Colors:
 
 async def interactions(ctx, members, name, error_name, giflist, altname=None):
     image = random.choice(giflist)
-    if len(set(members)) == 0:
-        return await ctx.respond(f'You must specify at least one user to {error_name}!', ephemeral=True)
     display_giflist = []
     for x in members:
         display_giflist.append(x.display_name)
