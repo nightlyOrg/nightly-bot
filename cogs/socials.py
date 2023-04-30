@@ -1,6 +1,6 @@
 import data
 from discord.ext import commands
-from discord import slash_command, Option
+from discord import slash_command, option, Option
 from utils import *
 import aiohttp
 
@@ -10,143 +10,127 @@ class socials(commands.Cog, name="social"):
         self.bot = bot
         self.help_icon = "♥️"
 
-    @slash_command(brief="Snuggle someone", options=[
-        Option(str, name="users", description="Mention users to snuggle")
-    ])
+    @slash_command(brief="Snuggle someone")
+    @option("members", str, description="Mention users to snuggle")
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def snuggle(self, ctx, *, members: str):
+    async def snuggle(self, ctx, members: str):
         """ Snuggle the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "snuggled", 'snuggle', data.snuggle)
 
-    @slash_command(brief="Hug someone", options=[
-        Option(str, name="users", description="Mention users to hug ")
-    ])
+    @slash_command(brief="Hug someone")
+    @option("members", str, description="Mention users to hug")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def hug(self, ctx, *, members: str):
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "hugged", 'hug', data.hug, 'Hug')
 
-    @slash_command(brief="Boop someone", options=[
-        Option(str, name="users", description="Mention users to boop")
-    ])
+    @slash_command(brief="Boop someone")
+    @option("members", str, description="Mention users to boop")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def boop(self, ctx, *, members: str):
         """ Boop the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "booped", 'boop', data.boop)
 
-    @slash_command(brief="Kiss someone", options=[
-        Option(str, name="users", description="Mention users to kiss")
-    ])
+    @slash_command(brief="Kiss someone")
+    @option("members", str, description="Mention users to kiss")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def smooch(self, ctx, *, members: str):
         """ Smooch the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "smooched", 'smooch', data.smooch)
 
-    @slash_command(brief="Lick someone", options=[
-        Option(str, name="users", description="Mention users to lick")
-    ])
+    @slash_command(brief="Lick someone")
+    @option("members", str, description="Mention users to lick")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def lick(self, ctx, *, members: str):
         """ Lick the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "licked", 'lick', data.lick)
 
-    @slash_command(brief="Give someone bellyrubs", options=[
-        Option(str, name="users", description="Mention users to bellyrub")
-    ])
+    @slash_command(brief="Give someone bellyrubs")
+    @option("members", str, description="Mention users to bellrub")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def bellyrub(self, ctx, *, members: str):
         """ Give bellyrubs to the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "bellyrubbed", 'rub the belly of', data.bellyrub, "Rub")
 
-    @slash_command(brief="Nuzzle someone", options=[
-        Option(str, name="users", description="Mention users to nuzzle")
-    ])
+    @slash_command(brief="Nuzzle someone")
+    @option("members", str, description="Mention users to nuzzle")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def nuzzle(self, ctx, *, members: str):
         """ Nuzzle the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "nuzzled", 'nuzzles', data.nuzzle)
 
-    @slash_command(brief="Cuddle someone", options=[
-        Option(str, name="users", description="Mention users to cuddle")
-    ])
+    @slash_command(brief="Cuddle someone")
+    @option("members", str, description="Mention users to cuddle")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def cuddle(self, ctx, *, members: str):
         """ Cuddle the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "cuddled", 'cuddle', data.cuddle)
 
-    @slash_command(brief="Feed someone", options=[
-        Option(str, name="users", description="Mention users to feed")
-    ])
+    @slash_command(brief="Feed someone")
+    @option("members", str, description="Mention users to feed")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def feed(self, ctx, *, members: str):
         """ Feed the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "fed", 'feed', data.feed)
 
-    @slash_command(brief="Glomp someone", options=[
-        Option(str, name="users", description="Mention users to glomp")
-    ])
+    @slash_command(brief="Glomp someone")
+    @option("members", str, description="Mention users to glomp")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def glomp(self, ctx, *, members: str):
         """ Glomp on the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "glomped", 'glomp', data.glomp)
 
-    @slash_command(brief="Highfive someone", options=[
-        Option(str, name="users", description="Mention users to highfive")
-    ])
+    @slash_command(brief="Highfive someone")
+    @option("members", str, description="Mention users to highfive")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def highfive(self, ctx, *, members: str):
         """ Highfive the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "highfived", 'highfive', data.highfive)
 
-    @slash_command(brief="Rawr", options=[
-        Option(str, name="users", description="Mention users to rawr at")
-    ])
+    @slash_command(brief="Rawr")
+    @option("members", str, description="Mention users to rawr at")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def rawr(self, ctx, *, members: str):
         """ Rawr at the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "rawred at", 'rawr at', data.rawr, "Rawr")
 
-    @slash_command(brief="Howl to the moon, or someone", options=[
-        Option(str, name="users", description="Mention users to howl at")
-    ])
+    @slash_command(brief="Howl to the moon, or someone")
+    @option("members", str, description="Mention users to howl at")
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def awoo(self, ctx, *, members: str):
+    async def howl(self, ctx, *, members: str):
         """ Howl at the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "howled at", 'howl at', data.awoo, "Howl")
 
-    @slash_command(brief="Pat someone", options=[
-        Option(str, name="users", description="Mention users to pat")
-    ])
+    @slash_command(brief="Pat someone")
+    @option("members", str, description="Mention users to pat")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def pat(self, ctx, *, members: str):
         """ Pat the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "pats", 'pat', data.pet, 'Pat')
 
-    @slash_command(brief="Give a cookie to someone", options=[
-        Option(str, name="users", description="Mention users to give a cookie to")
-    ])
+    @slash_command(brief="Give a cookie to someone")
+    @option("members", str, description="Mention users to give a cookie to")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def cookie(self, ctx, *, members: str):
         """ Give cookies to the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "gave a cookie to", 'give a cookie to', data.cookie, "Give a cookie")
 
-    @slash_command(brief="Dance with someone", options=[
-        Option(str, name="users", description="Mention users to dance with", required=False)
-    ])
+    @slash_command(brief="Dance with someone")
+    @option("members", str, description="Mention users to dance with", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def dance(self, ctx, *, members: str = None):
         """ Dance with someone """
@@ -156,9 +140,8 @@ class socials(commands.Cog, name="social"):
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "danced with", "dance with", data.dance, "Dance")
 
-    @slash_command(brief="Blush", options=[
-        Option(str, name="users", description="Mention users that made you blush", required=False)
-    ])
+    @slash_command(brief="Blush")
+    @option("members", str, description="Mention users that made you blush", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def blush(self, ctx, *, members: str = None):
         """ Blush (optionally because of specified people) """
@@ -168,9 +151,8 @@ class socials(commands.Cog, name="social"):
             memberlist = await mentionconverter(self, ctx, members)
         await feelings(ctx, memberlist, "blushes", data.blush)
 
-    @slash_command(brief="Be happy", options=[
-        Option(str, name="users", description="Mention users that made you happy", required=False)
-    ])
+    @slash_command(brief="Be happy")
+    @option("members", str, description="Mention users that made you happy", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def happy(self, ctx, *, members: str = None):
         """ Be happy (optionally because of specified people) """
@@ -180,9 +162,8 @@ class socials(commands.Cog, name="social"):
             memberlist = await mentionconverter(self, ctx, members)
         await feelings(ctx, memberlist, "smiles", data.happy)
 
-    @slash_command(brief="Wag your tail ", options=[
-        Option(str, name="users", description="Mention users that made you wag", required=False)
-    ])
+    @slash_command(brief="Wag your tail ")
+    @option("members", str, description="Mention users that made you wag", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def wag(self, ctx, *, members: str = None):
         """ Wag your tail (Optionally because of specified people) """
@@ -217,11 +198,10 @@ class socials(commands.Cog, name="social"):
                 e.set_image(url=js['image'])
                 await ctx.respond(embed=e)
 
-    @slash_command(options=[
-        discord.Option(discord.Member, name="user", description="Select a user"),
-        discord.Option(bool, name="border", description="Make it a border?", required=False),
-        discord.Option(bool, name="server-avatar", description="Use their server avatar?", required=False)
-    ])
+    @slash_command(brief="Give someone's avatar a rainbow overlay")
+    @option("user", discord.Member, description="Select a user")
+    @option("border", bool, description="Make it a border?", required=False)
+    @option("server-avatar", bool, description="Use their server avatar?", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def gay(self, ctx, user: discord.Member = None, border: bool = False, server_avatar: bool = False):
         """ Gay overlay on avatar """
