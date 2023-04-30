@@ -13,7 +13,6 @@ class socials(commands.Cog, name="social"):
     @slash_command(brief="Snuggle someone", options=[
         Option(str, name="users", description="Mention users to snuggle")
     ])
-    @Option(discord.Member, name="users", description="Wow")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def snuggle(self, ctx, *, members: str):
         """ Snuggle the specified people """
