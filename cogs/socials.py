@@ -167,7 +167,6 @@ class socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def wag(self, ctx, members):
         """ Wag your tail (Optionally because of specified people) """
-        print(members)
         if not members:
             memberlist = None
         else:
