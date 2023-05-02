@@ -23,7 +23,7 @@ class socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def hug(self, ctx, members):
         memberlist = await mentionconverter(self, ctx, members)
-        await interactions(ctx, memberlist, "hugged", 'hug', data.hug, 'Hug')
+        await interactions(ctx, memberlist, "hugged", 'hug', "https://some-random-api.com/animu/hug", 'Hug')
 
     @slash_command(brief="Boop someone")
     @option("members", str, description="Mention users to boop")
@@ -119,7 +119,7 @@ class socials(commands.Cog, name="social"):
     async def pat(self, ctx, members):
         """ Pat the specified people """
         memberlist = await mentionconverter(self, ctx, members)
-        await interactions(ctx, memberlist, "pats", 'pat', data.pet, 'Pat')
+        await interactions(ctx, memberlist, "pats", 'pat', "https://some-random-api.com/animu/pat", 'Pat')
 
     @slash_command(brief="Give a cookie to someone")
     @option("members", str, description="Mention users to give a cookie to")
