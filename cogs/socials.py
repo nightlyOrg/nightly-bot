@@ -22,6 +22,7 @@ class socials(commands.Cog, name="social"):
     @option("members", str, description="Mention users to hug")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def hug(self, ctx, members):
+        """ Hug the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         await interactions(ctx, memberlist, "hugged", 'hug', "https://some-random-api.com/animu/hug", 'Hug')
 
