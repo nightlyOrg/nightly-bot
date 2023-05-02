@@ -1,5 +1,6 @@
 import random
 import discord
+import aiohttp
 
 
 class Colors:
@@ -85,3 +86,10 @@ async def feelings(ctx, members, name, giflist):
             display_giflist = ', '.join(display_giflist)
         embed.description = f"**{ctx.author.display_name}** {name} because of **{display_giflist}**"
     await ctx.respond(embed=embed)
+
+
+async def apireq(url):
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(url) as r:
+            js = await r.json()
+            return js
