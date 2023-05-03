@@ -1,8 +1,6 @@
 from discord import slash_command
 from discord.ext import commands
 import utils
-from utils import *
-
 
 class Currency(commands.Cog, name="currency"):
     def __init__(self, bot):
