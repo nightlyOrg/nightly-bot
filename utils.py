@@ -105,3 +105,10 @@ async def apireq(url):
         async with cs.get(url) as r:
             js = await r.json()
             return js
+
+async def mysql_login():
+    return mysql.connect(
+        host=config.database['host'],
+        user=config.database['user'],
+        password=config.database['password'],
+        database=config.database['database'])
