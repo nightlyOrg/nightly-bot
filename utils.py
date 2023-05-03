@@ -10,7 +10,7 @@ class Colors:
     orange = 0xfaa61a
 
 
-async def interactions(ctx, members, name, giflist):
+async def interactions(ctx, members, action, giflist):
     if isinstance(giflist, str):
         json = await apireq(giflist)
         image = json['link']
@@ -26,7 +26,7 @@ async def interactions(ctx, members, name, giflist):
     else:
         memberlist = ', '.join(memberlist)
     embed = discord.Embed(
-        description=f"**{ctx.author.display_name}** {name} **" + memberlist + "**",
+        description=f"**{ctx.author.display_name}** {action} **" + memberlist + "**",
         color=discord.Color.blue())
     embed.set_thumbnail(url=image)
     return embed
