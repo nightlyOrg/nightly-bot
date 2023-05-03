@@ -1,7 +1,6 @@
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
 import utils
-from utils import *
 
 
 class Settings(commands.Cog, name="settings"):
