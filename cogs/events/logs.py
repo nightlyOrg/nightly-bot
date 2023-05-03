@@ -11,11 +11,11 @@ class logs(commands.Cog, name="Logs"):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_command(self, ctx):
+    async def on_application_command(self, ctx):
         if ctx.guild:
-            print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - {ctx.guild.name} | {ctx.author} > {ctx.message.clean_content}")
+            print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - {ctx.guild.name} | {ctx.author} > {ctx.command}")
         else:
-            print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Direct Messages | {ctx.author} > {ctx.message.clean_content}")
+            print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Direct Messages | {ctx.author} > {ctx.command}")
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
