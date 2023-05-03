@@ -1,6 +1,7 @@
+import discord
 from discord import slash_command
 from discord.ext import commands
-
+from discord.commands import SlashCommandGroup
 import utils
 from utils import *
 
@@ -30,6 +31,27 @@ class Currency(commands.Cog, name="currency"):
 
         return await ctx.respond(embed=embed, ephemeral=True)
 
+    settings = SlashCommandGroup("settings", "view your settings")
+
+    @settings.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def overview(self, ctx):
+        try:
+            cursor = await utils.mysql_login()
+            database = cursor.cursor()
+            database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
+            result = database.fetchall()
+            database.close()
+
+            return await ctx.respond(result)
+        except Exception as e:
+            return await ctx.respond(e)
+
+    @settings.command()
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def currency(self, ctx, status: discord.SlashCommandOptionType.boolean):
+        await ctx.respond(status)
 
 def setup(bot):
     bot.add_cog(Currency(bot))
