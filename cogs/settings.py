@@ -51,5 +51,6 @@ class Settings(commands.Cog, name="settings"):
         cursor.close()
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
 
+
 def setup(bot):
     bot.add_cog(Settings(bot))
