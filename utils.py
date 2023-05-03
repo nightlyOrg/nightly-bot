@@ -10,7 +10,7 @@ class Colors:
     orange = 0xfaa61a
 
 
-async def interactions(ctx, members, name, error_name, giflist, altname=None):
+async def interactions(ctx, members, name, giflist):
     if isinstance(giflist, str):
         json = await apireq(giflist)
         image = json['link']
@@ -29,28 +29,26 @@ async def interactions(ctx, members, name, error_name, giflist, altname=None):
         description=f"**{ctx.author.display_name}** {name} **" + display_giflist + "**",
         color=discord.Color.blue())
     embed.set_thumbnail(url=image)
-    view = interactionsView(ctx, members, name, error_name, giflist, altname)
-    await ctx.respond(embed=embed, view=view)
+    return embed
 
 
 class interactionsView(discord.ui.View):
-    def __init__(self, ctx, members, name, error_name, giflist, altname=None):
+    def __init__(self, ctx, members, name, button_label, giflist, error_string=None):
         super().__init__(timeout=600)
         self.ctx = ctx
         self.members = members
         self.name = name
-        self.error_name = error_name
         self.giflist = giflist
-        self.altname = altname
-        if self.altname is None:
-            self.button_callback.label = f"{self.error_name.title()} back!"
-        else:
-            self.button_callback.label = f"{self.altname} back!"
+        self.error_string = error_string
+        self.button_callback.label = f"{button_label} back!"
 
     @discord.ui.button()
     async def button_callback(self, button, interaction):
         if interaction.user not in self.members:
-            return await interaction.response.send_message(f"You weren't {self.name}!", ephemeral=True)
+            if not self.error_string:
+                return await interaction.response.send_message(f"You weren't {self.name}!", ephemeral=True)
+            else:
+                return await interaction.response.send_message(f"You weren't {self.error_string}!", ephemeral=True)
         self.members.remove(interaction.user)
         if len(self.members) == 0:
             self.disable_all_items()
