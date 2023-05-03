@@ -12,6 +12,7 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def balance(self, ctx):
         """ Check your balance """
+        await utils.checkSettingsValue(ctx, 'currency')
         cursor = await utils.mysql_login()
         database = cursor.cursor()
         database.execute("SELECT cash, bank FROM economy WHERE UID = %s", [ctx.author.id])
