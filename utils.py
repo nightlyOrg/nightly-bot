@@ -16,39 +16,39 @@ async def interactions(ctx, members, name, giflist):
         image = json['link']
     else:
         image = random.choice(giflist)
-    display_giflist = []
-    for x in members:
-        display_giflist.append(x.display_name)
+    memberlist = []
+    for member in members:
+        memberlist.append(member.display_name)
     if len(members) >= 3:
-        display_giflist.append(f"and {display_giflist.pop(-1)}")
+        memberlist.append(f"and {memberlist.pop(-1)}")
     if len(members) == 2:
-        display_giflist = f"{display_giflist[0]} and {display_giflist[1]}"
+        memberlist = f"{memberlist[0]} and {memberlist[1]}"
     else:
-        display_giflist = ', '.join(display_giflist)
+        memberlist = ', '.join(memberlist)
     embed = discord.Embed(
-        description=f"**{ctx.author.display_name}** {name} **" + display_giflist + "**",
+        description=f"**{ctx.author.display_name}** {name} **" + memberlist + "**",
         color=discord.Color.blue())
     embed.set_thumbnail(url=image)
     return embed
 
 
 class interactionsView(discord.ui.View):
-    def __init__(self, ctx, members, name, button_label, giflist, error_string=None):
+    def __init__(self, ctx, members, action, button_label, giflist, action_error=None):
         super().__init__(timeout=600)
         self.ctx = ctx
         self.members = members
-        self.name = name
+        self.action = action
         self.giflist = giflist
-        self.error_string = error_string
+        self.action_error = action_error
         self.button_callback.label = f"{button_label} back!"
 
     @discord.ui.button()
     async def button_callback(self, button, interaction):
         if interaction.user not in self.members:
-            if not self.error_string:
-                return await interaction.response.send_message(f"You weren't {self.name}!", ephemeral=True)
+            if not self.action_error:
+                return await interaction.response.send_message(f"You weren't {self.action}!", ephemeral=True)
             else:
-                return await interaction.response.send_message(f"You weren't {self.error_string}!", ephemeral=True)
+                return await interaction.response.send_message(f"You weren't {self.action_error}!", ephemeral=True)
         self.members.remove(interaction.user)
         if len(self.members) == 0:
             self.disable_all_items()
@@ -59,7 +59,7 @@ class interactionsView(discord.ui.View):
         else:
             image = random.choice(self.giflist)
         embed = discord.Embed(
-            description=f"**{interaction.user.name}** {self.name} **" + self.ctx.author.name + "** back!",
+            description=f"**{interaction.user.name}** {self.action} **" + self.ctx.author.name + "** back!",
             color=discord.Color.blue())
         embed.set_thumbnail(url=image)
         await interaction.response.send_message(embed=embed)
