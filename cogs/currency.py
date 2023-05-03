@@ -24,7 +24,7 @@ class Currency(commands.Cog, name="currency"):
             if not result:
                 result = [(0, 0)]
                 embed.add_field(name="WARNING",
-                                value="***Please make sure you agree to our [privacy policy](https://github.com/MiataBoy) before continuing.***\nThis warning will dissapear when you earn money.")
+                                value="***Please make sure you agree to our [privacy policy](https://github.com/MiataBoy) before continuing.***\nThis warning will disappear when you earn money.")
 
             embed.description = f"You have {utils.Emotes.cash} `{f'{result[0][0]:_}'.replace('_', '.')}` in your wallet\nYou have {utils.Emotes.bankCard} `{f'{result[0][1]:_}'.replace('_', '.')}` in your bank"
 
