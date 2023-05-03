@@ -1,8 +1,7 @@
-import data
-from discord.ext import commands
 from discord import slash_command, option
+from discord.ext import commands
+import data
 from utils import *
-import aiohttp
 
 
 class socials(commands.Cog, name="social"):
@@ -16,7 +15,7 @@ class socials(commands.Cog, name="social"):
         """ Snuggle the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         embed = await interactions(ctx, memberlist, "snuggled", data.snuggle)
-        view = interactionsView(ctx, memberlist, "snuggled",  "Snuggle", data.snuggle)
+        view = interactionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
         await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Hug someone")
@@ -26,7 +25,7 @@ class socials(commands.Cog, name="social"):
         """ Hug the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         embed = await interactions(ctx, memberlist, "hugged", "https://some-random-api.com/animu/hug")
-        view = interactionsView(ctx, memberlist, "hugged",  "Hug", "https://some-random-api.com/animu/hug")
+        view = interactionsView(ctx, memberlist, "hugged", "Hug", "https://some-random-api.com/animu/hug")
         await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Boop someone")
@@ -209,8 +208,10 @@ class socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def fact(self, ctx):
         """ Get a random animal fact """
-        facts = random.choice(["https://some-random-api.com/facts/dog", "https://some-random-api.com/facts/cat", "https://some-random-api.com/facts/panda",
-                               "https://some-random-api.com/facts/fox", "https://some-random-api.com/facts/bird", "https://some-random-api.com/facts/koala"])
+        facts = random.choice(["https://some-random-api.com/facts/dog", "https://some-random-api.com/facts/cat",
+                               "https://some-random-api.com/facts/panda",
+                               "https://some-random-api.com/facts/fox", "https://some-random-api.com/facts/bird",
+                               "https://some-random-api.com/facts/koala"])
         fact = await apireq(facts)
         await ctx.respond(fact['fact'])
 

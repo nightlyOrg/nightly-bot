@@ -1,7 +1,8 @@
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
 import utils
-
+import json
+import discord
 
 class Settings(commands.Cog, name="settings"):
     def __init__(self, bot):
@@ -50,6 +51,7 @@ class Settings(commands.Cog, name="settings"):
         database.close()
         cursor.close()
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
+
 
 def setup(bot):
     bot.add_cog(Settings(bot))

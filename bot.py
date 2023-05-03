@@ -1,6 +1,7 @@
+import discord
 from discord import Intents, Status, Activity, ActivityType
 from discord.ext import commands, bridge
-import discord
+
 from config import token
 from utils import mysql_login
 
@@ -33,8 +34,10 @@ async def on_connect():
     cursor = await mysql_login()
     database = cursor.cursor()
     database.execute("CREATE TABLE IF NOT EXISTS settings (GUILD VARCHAR(20) PRIMARY KEY, config JSON)")
-    database.execute("CREATE TABLE IF NOT EXISTS economy (UID VARCHAR(255) PRIMARY KEY, CASH FLOAT SIGNED, BANK FLOAT SIGNED)")
+    database.execute(
+        "CREATE TABLE IF NOT EXISTS economy (UID VARCHAR(255) PRIMARY KEY, CASH FLOAT SIGNED, BANK FLOAT SIGNED)")
     database.close()
+
 
 @bot.listen()
 async def on_ready():
