@@ -8,7 +8,6 @@ import aiohttp
 class socials(commands.Cog, name="social"):
     def __init__(self, bot):
         self.bot = bot
-        self.help_icon = "♥️"
 
     @slash_command(brief="Snuggle someone")
     @option("members", str, description="Mention users to snuggle")
