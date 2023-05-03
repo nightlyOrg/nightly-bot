@@ -2,6 +2,7 @@ import random
 import discord
 import aiohttp
 import config
+import json
 import mysql.connector as mysql
 
 class Colors:
@@ -13,6 +14,18 @@ class Colors:
 class Emotes:
     bankCard = '<a:MoneyCard2:1103307033941385247>'
     cash = '<:cash:1103307142410272768>'
+
+async def checkSettingsValue(ctx, setting: str):
+    cursor = await mysql_login()
+    database = cursor.cursor()
+    database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
+    result = database.fetchall()[0][0]
+    result = json.loads(result)
+
+    if not result[setting]:
+        return await ctx.respond(f'{setting} is disabled here.', ephemeral=True)
+    else:
+        return
 
 async def interactions(ctx, members, action, giflist):
     if isinstance(giflist, str):
