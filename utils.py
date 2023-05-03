@@ -1,7 +1,8 @@
 import random
 import discord
 import aiohttp
-
+import config
+import mysql.connector as mysql
 
 class Colors:
     blue = 0xadd8e6
