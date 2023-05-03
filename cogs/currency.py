@@ -1,5 +1,6 @@
 from discord import slash_command
 from discord.ext import commands
+import discord
 import utils
 
 class Currency(commands.Cog, name="currency"):
