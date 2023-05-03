@@ -7,7 +7,7 @@ from utils import mysql_login
 intents = Intents(guilds=True, guild_messages=True)
 # intents.message_content = True #Uncomment this if you use prefixed command that are not mentions
 bot = bridge.Bot(intents=intents, command_prefix=">>", status=Status.dnd,
-                 activity=Activity(type=ActivityType.watching, name="you (prefix: >>)"))
+                 activity=Activity(type=ActivityType.watching, name="you"))
 
 
 class MyNewHelp(commands.MinimalHelpCommand):
