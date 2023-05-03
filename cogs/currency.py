@@ -1,7 +1,5 @@
-import discord
 from discord import slash_command
 from discord.ext import commands
-from discord.commands import SlashCommandGroup
 import utils
 from utils import *
 
