@@ -1,5 +1,6 @@
 import random
 import discord
+import aiohttp
 
 
 class Colors:
@@ -10,7 +11,11 @@ class Colors:
 
 
 async def interactions(ctx, members, name, error_name, giflist, altname=None):
-    image = random.choice(giflist)
+    if isinstance(giflist, str):
+        json = await apireq(giflist)
+        image = json['link']
+    else:
+        image = random.choice(giflist)
     display_giflist = []
     for x in members:
         display_giflist.append(x.display_name)
@@ -50,7 +55,11 @@ class interactionsView(discord.ui.View):
         if len(self.members) == 0:
             self.disable_all_items()
             await interaction.message.edit(view=self)
-        image = random.choice(self.giflist)
+        if isinstance(self.giflist, str):
+            json = await apireq(self.giflist)
+            image = json['link']
+        else:
+            image = random.choice(self.giflist)
         embed = discord.Embed(
             description=f"**{interaction.user.name}** {self.name} **" + self.ctx.author.name + "** back!",
             color=discord.Color.blue())
@@ -85,3 +94,10 @@ async def feelings(ctx, members, name, giflist):
             display_giflist = ', '.join(display_giflist)
         embed.description = f"**{ctx.author.display_name}** {name} because of **{display_giflist}**"
     await ctx.respond(embed=embed)
+
+
+async def apireq(url):
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(url) as r:
+            js = await r.json()
+            return js

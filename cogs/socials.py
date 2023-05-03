@@ -22,8 +22,9 @@ class socials(commands.Cog, name="social"):
     @option("members", str, description="Mention users to hug")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def hug(self, ctx, members):
+        """ Hug the specified people """
         memberlist = await mentionconverter(self, ctx, members)
-        await interactions(ctx, memberlist, "hugged", 'hug', data.hug, 'Hug')
+        await interactions(ctx, memberlist, "hugged", 'hug', "https://some-random-api.com/animu/hug", 'Hug')
 
     @slash_command(brief="Boop someone")
     @option("members", str, description="Mention users to boop")
@@ -119,7 +120,7 @@ class socials(commands.Cog, name="social"):
     async def pat(self, ctx, members):
         """ Pat the specified people """
         memberlist = await mentionconverter(self, ctx, members)
-        await interactions(ctx, memberlist, "pats", 'pat', data.pet, 'Pat')
+        await interactions(ctx, memberlist, "pats", 'pat', "https://some-random-api.com/animu/pat", 'Pat')
 
     @slash_command(brief="Give a cookie to someone")
     @option("members", str, description="Mention users to give a cookie to")
@@ -179,12 +180,8 @@ class socials(commands.Cog, name="social"):
         """ Get a random animal fact """
         facts = random.choice(["https://some-random-api.com/facts/dog", "https://some-random-api.com/facts/cat", "https://some-random-api.com/facts/panda",
                                "https://some-random-api.com/facts/fox", "https://some-random-api.com/facts/bird", "https://some-random-api.com/facts/koala"])
-
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get(facts) as r:
-                js = await r.json()
-
-                await ctx.respond(js['fact'])
+        fact = await apireq(facts)
+        await ctx.respond(fact['fact'])
 
     @slash_command()
     @commands.cooldown(1, 5, commands.BucketType.user)
