@@ -1,4 +1,4 @@
-awoo = ["https://cdn.discordapp.com/attachments/715969701771083820/739429902402715748/unknown.gif",
+howl = ["https://cdn.discordapp.com/attachments/715969701771083820/739429902402715748/unknown.gif",
         "https://cdn.discordapp.com/attachments/726377118304305245/739430343962001468/unknown.gif",
         "https://cdn.discordapp.com/attachments/726377118304305245/739430488091000863/unknown.gif",
         "https://cdn.discordapp.com/attachments/726377118304305245/739430548895825930/unknown.gif",
