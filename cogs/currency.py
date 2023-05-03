@@ -1,7 +1,9 @@
+import discord
 from discord import slash_command
 from discord.ext import commands
-import discord
+
 import utils
+
 
 class Currency(commands.Cog, name="currency"):
     def __init__(self, bot):
@@ -28,6 +30,7 @@ class Currency(commands.Cog, name="currency"):
         embed.description = f"You have {utils.Emotes.cash} `{f'{result[0]:_}'.replace('_', '.')}` in your wallet\nYou have {utils.Emotes.bankCard} `{f'{result[1]:_}'.replace('_', '.')}` in your bank"
 
         return await ctx.respond(embed=embed, ephemeral=True)
+
 
 def setup(bot):
     bot.add_cog(Currency(bot))
