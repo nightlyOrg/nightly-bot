@@ -218,13 +218,10 @@ class socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def fox(self, ctx):
         """ Get a random fox """
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get("https://randomfox.ca/floof/") as r:
-                js = await r.json()
-
-                e = discord.Embed(title="Floofy fox!", color=discord.Color.orange())
-                e.set_image(url=js['image'])
-                await ctx.respond(embed=e)
+        json = await apireq("https://randomfox.ca/floof/")
+        embed = discord.Embed(title="Floofy fox!", color=discord.Color.orange())
+        embed.set_image(url=json['image'])
+        await ctx.respond(embed=embed)
 
     @slash_command(brief="Give someone's avatar a rainbow overlay")
     @option("user", discord.Member, description="Select a user", required=False)
