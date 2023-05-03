@@ -43,7 +43,7 @@ class socials(commands.Cog, name="social"):
     @option("members", str, description="Mention users to kiss")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def kiss(self, ctx, members):
-        """ Smooch the specified people """
+        """ Kiss the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         embed = await interactions(ctx, memberlist, "kissed", data.kiss)
         view = interactionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
@@ -218,13 +218,10 @@ class socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def fox(self, ctx):
         """ Get a random fox """
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get("https://randomfox.ca/floof/") as r:
-                js = await r.json()
-
-                e = discord.Embed(title="Floofy fox!", color=discord.Color.orange())
-                e.set_image(url=js['image'])
-                await ctx.respond(embed=e)
+        json = await apireq("https://randomfox.ca/floof/")
+        embed = discord.Embed(title="Floofy fox!", color=discord.Color.orange())
+        embed.set_image(url=json['image'])
+        await ctx.respond(embed=embed)
 
     @slash_command(brief="Give someone's avatar a rainbow overlay")
     @option("user", discord.Member, description="Select a user", required=False)
