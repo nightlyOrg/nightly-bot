@@ -20,8 +20,19 @@ class Settings(commands.Cog, name="settings"):
         result = database.fetchall()[0][0]
         database.close()
 
-            return await ctx.respond(result)
+        result = json.loads(result)
+        print(result)
+        overview = ""
+        for setting in result:
+            print(setting)
+            overview += f"**{setting}:** {'Enabled' if result[setting] else 'Disabled'}\n"
 
+        embed = discord.Embed()
+        embed.title = f"Settings for {ctx.guild.name}"
+        embed.description = overview
+        embed.colour = utils.Colors.green
+
+        return await ctx.respond(embed=embed)
 
     @settings.command()
     @commands.cooldown(1, 5, commands.BucketType.user)
