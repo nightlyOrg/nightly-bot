@@ -10,6 +10,9 @@ class Colors:
     green = 0x90ee90
     orange = 0xfaa61a
 
+class Emotes:
+    bankCard = '<a:MoneyCard2:1103307033941385247>'
+    cash = '<:cash:1103307142410272768>'
 
 async def interactions(ctx, members, name, error_name, giflist, altname=None):
     if isinstance(giflist, str):
