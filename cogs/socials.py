@@ -43,7 +43,7 @@ class socials(commands.Cog, name="social"):
     @option("members", str, description="Mention users to kiss")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def kiss(self, ctx, members):
-        """ Smooch the specified people """
+        """ Kiss the specified people """
         memberlist = await mentionconverter(self, ctx, members)
         embed = await interactions(ctx, memberlist, "kissed", data.kiss)
         view = interactionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
