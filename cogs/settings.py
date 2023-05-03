@@ -1,8 +1,7 @@
-from discord.ext import commands
 from discord.commands import SlashCommandGroup
+from discord.ext import commands
 import utils
-import discord
-import json
+from utils import *
 
 
 class Settings(commands.Cog, name="settings"):
