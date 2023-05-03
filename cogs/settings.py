@@ -8,17 +8,17 @@ class Settings(commands.Cog, name="settings"):
     def __init__(self, bot):
         self.bot = bot
 
-        settings = SlashCommandGroup("settings", "view your settings")
+    settings = SlashCommandGroup("settings", "view your settings")
 
-        @settings.command()
-        @commands.cooldown(1, 5, commands.BucketType.user)
-        async def overview(self, ctx):
-            """ View your server's settings """
-            cursor = await utils.mysql_login()
-            database = cursor.cursor()
-            database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
-            result = database.fetchall()
-            database.close()
+    @settings.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def overview(self, ctx):
+        """ View your server's settings """
+        cursor = await utils.mysql_login()
+        database = cursor.cursor()
+        database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
+        result = database.fetchall()[0][0]
+        database.close()
 
             return await ctx.respond(result)
 
