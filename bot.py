@@ -1,11 +1,11 @@
 import discord
 from discord import Intents, Status, Activity, ActivityType
-from discord.ext import commands, bridge
+from discord.ext import commands
 
 from config import token
 from utils import mysql_login
 
-intents = Intents(guilds=True, guild_messages=True)
+intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
                   activity=Activity(type=ActivityType.watching, name="you"))
 
@@ -20,7 +20,6 @@ class MyNewHelp(commands.MinimalHelpCommand):
 
 bot.help_command = MyNewHelp()
 
-bot.load_extension('jishaku')
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
 print(bot.extensions)
