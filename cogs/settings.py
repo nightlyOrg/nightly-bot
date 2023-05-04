@@ -22,10 +22,8 @@ class Settings(commands.Cog, name="settings"):
         database.close()
 
         result = json.loads(result)
-        print(result)
         overview = ""
         for setting in result:
-            print(setting)
             overview += f"**{setting}:** {'Enabled' if result[setting] else 'Disabled'}\n"
 
         embed = discord.Embed()
