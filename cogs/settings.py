@@ -51,6 +51,24 @@ class Settings(commands.Cog, name="settings"):
         cursor.close()
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
 
+    @settings.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def socials(self, ctx, enabled: discord.SlashCommandOptionType.boolean):
+        """ Disable or enable social interactions """
+        cursor = await utils.mysql_login()
+        database = cursor.cursor()
+        database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
+        result = database.fetchall()[0][0]
+        result = json.loads(result)
+        result['socials'] = enabled
+        newConfig = json.dumps(result)
+
+        database.execute("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        cursor.commit()
+        database.close()
+        cursor.close()
+        return await ctx.respond(f"Socials is now {'enabled' if result['socials'] else 'disabled'}.")
+
 
 def setup(bot):
     bot.add_cog(Settings(bot))
