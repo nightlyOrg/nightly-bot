@@ -4,6 +4,7 @@ import utils
 import json
 import discord
 
+
 class Settings(commands.Cog, name="settings"):
     def __init__(self, bot):
         self.bot = bot

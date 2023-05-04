@@ -4,6 +4,7 @@ from datetime import datetime
 from discord.ext import commands
 from utils import mysql_login
 
+
 # from cogs.admin import admin_only
 
 class logs(commands.Cog, name="Logs"):
@@ -57,6 +58,7 @@ class logs(commands.Cog, name="Logs"):
 
         else:
             print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Successfully deleted configuration settings from database")
+
 
 def setup(bot):
     bot.add_cog(logs(bot))
