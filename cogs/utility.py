@@ -27,9 +27,7 @@ class Utility(commands.Cog, name="utility"):
         embed.set_footer(text=f"ID: {guild.id}")
         if (guild.banner):
             embed.set_image(url=guild.banner.url)
-        for feature in guild.features:
-            features += f"{feature}, "
-        features = features[:-2].replace("_", " ").title()  # Cut off trailing ", " fix casing and remove underscores
+        features = ", ".join(guild.features).replace("_", " ").title()
         embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
 
