@@ -14,9 +14,12 @@ class Utility(commands.Cog, name="utility"):
         owner = await guild.fetch_member(guild.owner_id)
         embed = discord.Embed(color=Colors.blue, title=guild.name)
         embed.set_thumbnail(url=guild.icon.url)
+        embed.add_field(name="Owner", value=owner.mention)
         embed.add_field(name="Members", value=guild.member_count, inline=True)
         embed.add_field(name="Roles", value=len(await guild.fetch_roles()), inline=True)
-        embed.add_field(name="Owner", value=owner.mention)
+        embed.add_field(name="Channels", value=f"{len(guild.text_channels)} Text, {len(guild.voice_channels)} Voice")
+        embed.add_field(name="Created", value=f"<t:{round(guild.created_at.timestamp())}:R>")
+        embed.set_footer(text=f"ID: {guild.id}")
         await ctx.respond(embed=embed)
 
 
