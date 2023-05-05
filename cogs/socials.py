@@ -5,7 +5,7 @@ from utilities.social import *
 from utilities.utils import checkSettingsValue
 
 
-class socials(commands.Cog, name="social"):
+class Socials(commands.Cog, name="social"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -17,7 +17,8 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "snuggled", data.snuggle)
-            view = interactionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
+            view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
+            view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Hug someone")
@@ -28,7 +29,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "hugged", "https://some-random-api.com/animu/hug")
-            view = interactionsView(ctx, memberlist, "hugged", "Hug", "https://some-random-api.com/animu/hug")
+            view = InteractionsView(ctx, memberlist, "hugged", "Hug", "https://some-random-api.com/animu/hug")
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Boop someone")
@@ -39,7 +40,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "booped", data.boop)
-            view = interactionsView(ctx, memberlist, "booped", "Boop", data.boop)
+            view = InteractionsView(ctx, memberlist, "booped", "Boop", data.boop)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Kiss someone")
@@ -50,7 +51,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "kissed", data.kiss)
-            view = interactionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
+            view = InteractionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Lick someone")
@@ -61,7 +62,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "licked", data.lick)
-            view = interactionsView(ctx, memberlist, "licked", "Lick", data.lick)
+            view = InteractionsView(ctx, memberlist, "licked", "Lick", data.lick)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Give someone bellyrubs")
@@ -72,7 +73,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "rubbed the belly of", data.bellyrub)
-            view = interactionsView(ctx, memberlist, "rubed the belly off", "Rub", data.bellyrub, "given bellyrubs")
+            view = InteractionsView(ctx, memberlist, "rubed the belly off", "Rub", data.bellyrub, "given bellyrubs")
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Nuzzle someone")
@@ -83,7 +84,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "nuzzled", data.nuzzle)
-            view = interactionsView(ctx, memberlist, "nuzzled", "Nuzzle", data.nuzzle)
+            view = InteractionsView(ctx, memberlist, "nuzzled", "Nuzzle", data.nuzzle)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Cuddle someone")
@@ -94,7 +95,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "cuddled", data.cuddle)
-            view = interactionsView(ctx, memberlist, "cuddled", "Cuddle", data.cuddle)
+            view = InteractionsView(ctx, memberlist, "cuddled", "Cuddle", data.cuddle)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Feed someone")
@@ -105,7 +106,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "fed", data.feed)
-            view = interactionsView(ctx, memberlist, "fed", "Feed", data.feed)
+            view = InteractionsView(ctx, memberlist, "fed", "Feed", data.feed)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Glomp someone")
@@ -116,7 +117,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "glomped", data.glomp)
-            view = interactionsView(ctx, memberlist, "glomped", "Glomp", data.glomp)
+            view = InteractionsView(ctx, memberlist, "glomped", "Glomp", data.glomp)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Highfive someone")
@@ -127,7 +128,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "highfived", data.highfive)
-            view = interactionsView(ctx, memberlist, "highfived", "Highfive", data.highfive)
+            view = InteractionsView(ctx, memberlist, "highfived", "Highfive", data.highfive)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Rawr")
@@ -138,7 +139,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "rawred at", data.rawr)
-            view = interactionsView(ctx, memberlist, "rawred at", "Rawr", data.rawr)
+            view = InteractionsView(ctx, memberlist, "rawred at", "Rawr", data.rawr)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Howl to the moon, or someone")
@@ -149,7 +150,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "howled at", data.howl)
-            view = interactionsView(ctx, memberlist, "howled at", "Howl", data.howl)
+            view = InteractionsView(ctx, memberlist, "howled at", "Howl", data.howl)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Pat someone")
@@ -160,7 +161,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "pats", "https://some-random-api.com/animu/pat")
-            view = interactionsView(ctx, memberlist, "pats", "Pat", "https://some-random-api.com/animu/pat", "Pat")
+            view = InteractionsView(ctx, memberlist, "pats", "Pat", "https://some-random-api.com/animu/pat", "Pat")
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Give a cookie to someone")
@@ -171,7 +172,7 @@ class socials(commands.Cog, name="social"):
         if not bool(await checkSettingsValue(ctx, 'socials')):
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "gave a cookie to", data.cookie)
-            view = interactionsView(ctx, memberlist, "gave a cookie to", "Give a cookie", data.cookie, "given a cookie")
+            view = InteractionsView(ctx, memberlist, "gave a cookie to", "Give a cookie", data.cookie, "given a cookie")
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Dance with someone")
@@ -185,7 +186,7 @@ class socials(commands.Cog, name="social"):
                 return await feelings(ctx, memberlist, "dances", data.dance)
             memberlist = await mentionconverter(self, ctx, members)
             embed = await interactions(ctx, memberlist, "danced with", data.dance)
-            view = interactionsView(ctx, memberlist, "danced with", "Dance", data.dance)
+            view = InteractionsView(ctx, memberlist, "danced with", "Dance", data.dance)
             await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Blush")
@@ -274,4 +275,4 @@ class socials(commands.Cog, name="social"):
 
 
 def setup(bot):
-    bot.add_cog(socials(bot))
+    bot.add_cog(Socials(bot))
