@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
-
-import config
+from utilities.data import Emotes, Colors
 
 
 # from cogs.admin import admin_only
