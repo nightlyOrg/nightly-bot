@@ -12,6 +12,7 @@ class Utility(commands.Cog, name="utility"):
     async def serverinfo(self, ctx: discord.ApplicationContext):
         guild = ctx.guild
         owner = await guild.fetch_member(guild.owner_id)
+        features = ""
         embed = discord.Embed(color=discord.Color.random(), title=guild.name)
         embed.description = f"""
 **Owner:** {owner.mention}
@@ -26,6 +27,12 @@ class Utility(commands.Cog, name="utility"):
         embed.set_footer(text=f"ID: {guild.id}")
         if (guild.banner):
             embed.set_image(url=guild.banner.url)
+        for feature in guild.features:
+            features += f"{feature}, "
+        features = features[:-2]  # Cut off trailing , and whitespace
+        features = features.replace("_", " ")
+        features = features.title()
+        embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
 
 
