@@ -8,7 +8,8 @@ class Utility(commands.Cog, name="utility"):
         self.bot = bot
 
     @slash_command(brief="Information about the server")
-    async def serverinfo(self, ctx: discord.ApplicationContext):
+    async def serverinfo(self, ctx):
+        """ Get the current server's info """
         guild = ctx.guild
         owner = await guild.fetch_member(guild.owner_id)
         features = ""
