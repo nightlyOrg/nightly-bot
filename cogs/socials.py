@@ -13,216 +13,197 @@ class Socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def snuggle(self, ctx, members):
         """ Snuggle the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "snuggled", data.snuggle)
-            view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
-            view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "snuggled", data.snuggle)
+        view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
+        view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Hug someone")
     @option("members", str, description="Mention users to hug")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def hug(self, ctx, members):
         """ Hug the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "hugged", "https://some-random-api.com/animu/hug")
-            view = InteractionsView(ctx, memberlist, "hugged", "Hug", "https://some-random-api.com/animu/hug")
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "hugged", "https://some-random-api.com/animu/hug")
+        view = InteractionsView(ctx, memberlist, "hugged", "Hug", "https://some-random-api.com/animu/hug")
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Boop someone")
     @option("members", str, description="Mention users to boop")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def boop(self, ctx, members):
         """ Boop the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "booped", data.boop)
-            view = InteractionsView(ctx, memberlist, "booped", "Boop", data.boop)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "booped", data.boop)
+        view = InteractionsView(ctx, memberlist, "booped", "Boop", data.boop)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Kiss someone")
     @option("members", str, description="Mention users to kiss")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def kiss(self, ctx, members):
         """ Kiss the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "kissed", data.kiss)
-            view = InteractionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "kissed", data.kiss)
+        view = InteractionsView(ctx, memberlist, "kissed", "Kiss", data.kiss)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Lick someone")
     @option("members", str, description="Mention users to lick")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def lick(self, ctx, members):
         """ Lick the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "licked", data.lick)
-            view = InteractionsView(ctx, memberlist, "licked", "Lick", data.lick)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "licked", data.lick)
+        view = InteractionsView(ctx, memberlist, "licked", "Lick", data.lick)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Give someone bellyrubs")
     @option("members", str, description="Mention users to bellrub")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def bellyrub(self, ctx, members):
         """ Give bellyrubs to the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "rubbed the belly of", data.bellyrub)
-            view = InteractionsView(ctx, memberlist, "rubed the belly off", "Rub", data.bellyrub, "given bellyrubs")
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "rubbed the belly of", data.bellyrub)
+        view = InteractionsView(ctx, memberlist, "rubed the belly off", "Rub", data.bellyrub, "given bellyrubs")
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Nuzzle someone")
     @option("members", str, description="Mention users to nuzzle")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def nuzzle(self, ctx, members):
         """ Nuzzle the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "nuzzled", data.nuzzle)
-            view = InteractionsView(ctx, memberlist, "nuzzled", "Nuzzle", data.nuzzle)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "nuzzled", data.nuzzle)
+        view = InteractionsView(ctx, memberlist, "nuzzled", "Nuzzle", data.nuzzle)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Cuddle someone")
     @option("members", str, description="Mention users to cuddle")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def cuddle(self, ctx, members):
         """ Cuddle the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "cuddled", data.cuddle)
-            view = InteractionsView(ctx, memberlist, "cuddled", "Cuddle", data.cuddle)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "cuddled", data.cuddle)
+        view = InteractionsView(ctx, memberlist, "cuddled", "Cuddle", data.cuddle)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Feed someone")
     @option("members", str, description="Mention users to feed")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def feed(self, ctx, members):
         """ Feed the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "fed", data.feed)
-            view = InteractionsView(ctx, memberlist, "fed", "Feed", data.feed)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "fed", data.feed)
+        view = InteractionsView(ctx, memberlist, "fed", "Feed", data.feed)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Glomp someone")
     @option("members", str, description="Mention users to glomp")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def glomp(self, ctx, members):
         """ Glomp on the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "glomped", data.glomp)
-            view = InteractionsView(ctx, memberlist, "glomped", "Glomp", data.glomp)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "glomped", data.glomp)
+        view = InteractionsView(ctx, memberlist, "glomped", "Glomp", data.glomp)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Highfive someone")
     @option("members", str, description="Mention users to highfive")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def highfive(self, ctx, members):
         """ Highfive the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "highfived", data.highfive)
-            view = InteractionsView(ctx, memberlist, "highfived", "Highfive", data.highfive)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "highfived", data.highfive)
+        view = InteractionsView(ctx, memberlist, "highfived", "Highfive", data.highfive)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Rawr")
     @option("members", str, description="Mention users to rawr at")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def rawr(self, ctx, members):
         """ Rawr at the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "rawred at", data.rawr)
-            view = InteractionsView(ctx, memberlist, "rawred at", "Rawr", data.rawr)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "rawred at", data.rawr)
+        view = InteractionsView(ctx, memberlist, "rawred at", "Rawr", data.rawr)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Howl to the moon, or someone")
     @option("members", str, description="Mention users to howl at")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def howl(self, ctx, members):
         """ Howl at the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "howled at", data.howl)
-            view = InteractionsView(ctx, memberlist, "howled at", "Howl", data.howl)
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "howled at", data.howl)
+        view = InteractionsView(ctx, memberlist, "howled at", "Howl", data.howl)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Pat someone")
     @option("members", str, description="Mention users to pat")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def pat(self, ctx, members):
         """ Pat the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "pats", "https://some-random-api.com/animu/pat")
-            view = InteractionsView(ctx, memberlist, "pats", "Pat", "https://some-random-api.com/animu/pat", "Pat")
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "pats", "https://some-random-api.com/animu/pat")
+        view = InteractionsView(ctx, memberlist, "pats", "Pat", "https://some-random-api.com/animu/pat", "Pat")
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Give a cookie to someone")
     @option("members", str, description="Mention users to give a cookie to")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def cookie(self, ctx, members):
         """ Give cookies to the specified people """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "gave a cookie to", data.cookie)
-            view = InteractionsView(ctx, memberlist, "gave a cookie to", "Give a cookie", data.cookie, "given a cookie")
-            await ctx.respond(embed=embed, view=view)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "gave a cookie to", data.cookie)
+        view = InteractionsView(ctx, memberlist, "gave a cookie to", "Give a cookie", data.cookie, "given a cookie")
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Dance with someone")
     @option("members", str, description="Mention users to dance with", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def dance(self, ctx, members):
         """ Dance with someone """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            if not members:
-                memberlist = None
-                return await feelings(ctx, memberlist, "dances", data.dance)
-            memberlist = await mentionconverter(self, ctx, members)
-            embed = await interactions(ctx, memberlist, "danced with", data.dance)
-            view = InteractionsView(ctx, memberlist, "danced with", "Dance", data.dance)
-            await ctx.respond(embed=embed, view=view)
+        if not members:
+            memberlist = None
+            return await feelings(ctx, memberlist, "dances", data.dance)
+        memberlist = await mentionconverter(self, ctx, members)
+        embed = await interactions(ctx, memberlist, "danced with", data.dance)
+        view = InteractionsView(ctx, memberlist, "danced with", "Dance", data.dance)
+        await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Blush")
     @option("members", str, description="Mention users that made you blush", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def blush(self, ctx, members):
         """ Blush (optionally because of specified people) """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            if not members:
-                memberlist = None
-            else:
-                memberlist = await mentionconverter(self, ctx, members)
-            await feelings(ctx, memberlist, "blushes", data.blush)
+        if not members:
+            memberlist = None
+        else:
+            memberlist = await mentionconverter(self, ctx, members)
+        await feelings(ctx, memberlist, "blushes", data.blush)
 
     @slash_command(brief="Be happy")
     @option("members", str, description="Mention users that made you happy", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def happy(self, ctx, members):
         """ Be happy (optionally because of specified people) """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            if not members:
-                memberlist = None
-            else:
-                memberlist = await mentionconverter(self, ctx, members)
-            await feelings(ctx, memberlist, "smiles", data.happy)
+        if not members:
+            memberlist = None
+        else:
+            memberlist = await mentionconverter(self, ctx, members)
+        await feelings(ctx, memberlist, "smiles", data.happy)
 
     @slash_command(brief="Wag your tail ")
     @option("members", str, description="Mention users that made you wag", required=False)
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def wag(self, ctx, members):
         """ Wag your tail (Optionally because of specified people) """
-        if not bool(await checkSettingsValue(ctx, 'socials')):
-            if not members:
-                memberlist = None
-            else:
-                memberlist = await mentionconverter(self, ctx, members)
-            await feelings(ctx, memberlist, "wags their tail", data.wag)
+        if not members:
+            memberlist = None
+        else:
+            memberlist = await mentionconverter(self, ctx, members)
+        await feelings(ctx, memberlist, "wags their tail", data.wag)
 
     @slash_command()
     @commands.cooldown(1, 5, commands.BucketType.user)
