@@ -8,3 +8,6 @@ class Colors:
 class Emotes:
     bankCard = '<a:MoneyCard2:1103307033941385247>'
     cash = '<:cash:1103307142410272768>'
+    crossmark = '<:Cross:845654734916681749>'
+    checkmark = '<:Check:909435999216623636>'
+    confused = '<a:loading:908629364378325023>'
