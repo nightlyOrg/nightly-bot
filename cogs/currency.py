@@ -1,8 +1,8 @@
 import discord
 from discord import slash_command
 from discord.ext import commands
-
-import utils
+from utilities.database import selector
+from utilities.data import Colors, Emotes
 
 
 class Currency(commands.Cog, name="currency"):
