@@ -50,4 +50,19 @@ async def on_ready():
         BOOTED = True
 
 
+@bot.check
+async def block_disabled_commands(ctx):
+    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+    result = json.loads(result)
+
+    cog = ctx.cog.__class__.__name__
+
+    if cog.lower() not in result:
+        return True
+    elif cog.lower() in result and result[cog.lower()]:
+        return True
+    else:
+        await ctx.respond(f'{cog} is disabled here.', ephemeral=True)
+        return False
+
 bot.run(token)
