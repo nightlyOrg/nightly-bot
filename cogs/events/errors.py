@@ -6,7 +6,7 @@ from utilities.data import Emotes, Colors, Links
 
 # from cogs.admin import admin_only
 
-class error(commands.Cog, name="Error"):
+class Error(commands.Cog, name="Error"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -34,4 +34,4 @@ class error(commands.Cog, name="Error"):
 
 
 def setup(bot):
-    bot.add_cog(error(bot))
+    bot.add_cog(Error(bot))
