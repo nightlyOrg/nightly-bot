@@ -4,8 +4,6 @@ from discord.ext import commands
 from utilities.data import Emotes, Colors, Links
 
 
-# from cogs.admin import admin_only
-
 class Error(commands.Cog, name="Error"):
     def __init__(self, bot):
         self.bot = bot
