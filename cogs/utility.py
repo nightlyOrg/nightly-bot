@@ -1,7 +1,6 @@
 import discord
 from discord import slash_command
 from discord.ext import commands
-import random
 
 
 class Utility(commands.Cog, name="utility"):
