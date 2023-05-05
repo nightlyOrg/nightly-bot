@@ -18,6 +18,7 @@ class Utility(commands.Cog, name="utility"):
 **Owner:** {owner.mention}
 **Members:** {guild.member_count}
 **Roles:** {len(await guild.fetch_roles())}
+**Verification:** {str(guild.verification_level).title()}
 **Channels:** {len(guild.text_channels)} Text, {len(guild.voice_channels)} Voice
 **Created:** <t:{round(guild.created_at.timestamp())}:R>
 **Emojis:** {len(guild.emojis)}
@@ -29,9 +30,7 @@ class Utility(commands.Cog, name="utility"):
             embed.set_image(url=guild.banner.url)
         for feature in guild.features:
             features += f"{feature}, "
-        features = features[:-2]  # Cut off trailing , and whitespace
-        features = features.replace("_", " ")
-        features = features.title()
+        features = features[:-2].replace("_", " ").title()  # Cut off trailing ", " fix casing and remove underscores
         embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
 
