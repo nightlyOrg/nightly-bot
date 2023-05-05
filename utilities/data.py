@@ -11,3 +11,6 @@ class Emotes:
     crossmark = '<:Cross:845654734916681749>'
     checkmark = '<:Check:909435999216623636>'
     confused = '<a:loading:908629364378325023>'
+
+class Links:
+    discord = 'https://discord.gg/qWyNwSx2rx'
