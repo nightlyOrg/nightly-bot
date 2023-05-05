@@ -1,42 +1,9 @@
-import json
-import random
 import aiohttp
+import random
 import discord
-import mysql.connector as mysql
-import config
 
 
-class Colors:
-    blue = 0xadd8e6
-    red = 0xf04747
-    green = 0x90ee90
-    orange = 0xfaa61a
-
-
-class Emotes:
-    bankCard = '<a:MoneyCard2:1103307033941385247>'
-    cash = '<:cash:1103307142410272768>'
-
-
-async def checkSettingsValue(ctx, setting: str):
-    cursor = await mysql_login()
-    database = cursor.cursor()
-    database.execute("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
-    result = database.fetchall()[0][0]
-    result = json.loads(result)
-
-    if not result[setting]:
-        return await ctx.respond(f'{setting} is disabled here.', ephemeral=True)
-    else:
-        return
-
-
-async def interactions(ctx, members, action, giflist):
-    if isinstance(giflist, str):
-        json = await apireq(giflist)
-        image = json['link']
-    else:
-        image = random.choice(giflist)
+def memberlistAppend(members):
     memberlist = []
     for member in members:
         memberlist.append(member.display_name)
@@ -46,6 +13,16 @@ async def interactions(ctx, members, action, giflist):
         memberlist = f"{memberlist[0]} and {memberlist[1]}"
     else:
         memberlist = ', '.join(memberlist)
+    return memberlist
+
+
+async def interactions(ctx, members, action, giflist):
+    if isinstance(giflist, str):
+        json = await apireq(giflist)
+        image = json['link']
+    else:
+        image = random.choice(giflist)
+    memberlist = memberlistAppend(members)
     embed = discord.Embed(
         description=f"**{ctx.author.display_name}** {action} **" + memberlist + "**",
         color=discord.Color.blue())
@@ -53,7 +30,7 @@ async def interactions(ctx, members, action, giflist):
     return embed
 
 
-class interactionsView(discord.ui.View):
+class InteractionsView(discord.ui.View):
     def __init__(self, ctx, members, action, button_label, giflist, action_error=None):
         super().__init__(timeout=600)
         self.ctx = ctx
@@ -103,15 +80,7 @@ async def feelings(ctx, members, name, giflist):
     if members is None:
         embed.description = f"**{ctx.author.display_name}** {name}!"
     else:
-        display_giflist = []
-        for x in members:
-            display_giflist.append(x.display_name)
-        if len(members) >= 3:
-            display_giflist.append(f"**and **{display_giflist.pop(-1)}")
-        if len(members) == 2:
-            display_giflist = f"{display_giflist[0]}** and **{display_giflist[1]}"
-        else:
-            display_giflist = ', '.join(display_giflist)
+        display_giflist = memberlistAppend(members)
         embed.description = f"**{ctx.author.display_name}** {name} because of **{display_giflist}**"
     await ctx.respond(embed=embed)
 
@@ -121,11 +90,3 @@ async def apireq(url):
         async with cs.get(url) as r:
             js = await r.json()
             return js
-
-
-async def mysql_login():
-    return mysql.connect(
-        host=config.database['host'],
-        user=config.database['user'],
-        password=config.database['password'],
-        database=config.database['database'])
