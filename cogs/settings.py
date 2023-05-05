@@ -26,7 +26,7 @@ class Settings(commands.Cog, name="settings"):
         embed = discord.Embed()
         embed.title = f"Settings for {ctx.guild.name}"
         embed.description = overview
-        embed.colour = utils.Colors.green
+        embed.colour = Colors.green
 
         return await ctx.respond(embed=embed)
 
