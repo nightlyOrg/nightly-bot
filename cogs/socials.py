@@ -2,7 +2,6 @@ from discord import slash_command, option
 from discord.ext import commands
 import data
 from utilities.social import *
-from utilities.utils import checkSettingsValue
 
 
 class Socials(commands.Cog, name="social"):
