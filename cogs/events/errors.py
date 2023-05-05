@@ -1,6 +1,7 @@
+import traceback
 import discord
 from discord.ext import commands
-from utilities.data import Emotes, Colors
+from utilities.data import Emotes, Colors, Links
 
 
 # from cogs.admin import admin_only
