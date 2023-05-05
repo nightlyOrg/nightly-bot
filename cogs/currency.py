@@ -17,7 +17,7 @@ class Currency(commands.Cog, name="currency"):
         cursor = await utils.mysql_login()
         database = cursor.cursor()
         database.execute("SELECT cash, bank FROM economy WHERE UID = %s", [ctx.author.id])
-        result = database.fetchall()[0]
+        result = database.fetchall()
         database.close()
 
         embed = discord.Embed(colour=utils.Colors.blue)
@@ -27,7 +27,7 @@ class Currency(commands.Cog, name="currency"):
             embed.add_field(name="WARNING",
                             value="***Please make sure you agree to our [privacy policy](https://github.com/MiataBoy) before continuing.***\nThis warning will disappear when you earn money.")
 
-        embed.description = f"You have {utils.Emotes.cash} `{f'{result[0]:_}'.replace('_', '.')}` in your wallet\nYou have {utils.Emotes.bankCard} `{f'{result[1]:_}'.replace('_', '.')}` in your bank"
+        embed.description = f"You have {utils.Emotes.cash} `{f'{result[0][0]:_}'.replace('_', '.')}` in your wallet\nYou have {utils.Emotes.bankCard} `{f'{result[0][1]:_}'.replace('_', '.')}` in your bank"
 
         return await ctx.respond(embed=embed, ephemeral=True)
 
