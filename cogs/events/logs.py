@@ -7,7 +7,7 @@ from utilities.database import mysql_login
 
 # from cogs.admin import admin_only
 
-class logs(commands.Cog, name="Logs"):
+class Logs(commands.Cog, name="Logs"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -61,4 +61,4 @@ class logs(commands.Cog, name="Logs"):
 
 
 def setup(bot):
-    bot.add_cog(logs(bot))
+    bot.add_cog(Logs(bot))
