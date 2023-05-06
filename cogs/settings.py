@@ -1,6 +1,6 @@
 from discord.commands import SlashCommandGroup
 from discord.ext import commands
-from utilities.database import selector, saveData
+from utilities.database import selector, modifyData
 from utilities.data import Colors
 import json
 import discord
@@ -39,7 +39,7 @@ class Settings(commands.Cog, name="settings"):
         result['currency'] = enabled
         newConfig = json.dumps(result)
 
-        await saveData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
 
     @settings.command()
@@ -51,7 +51,7 @@ class Settings(commands.Cog, name="settings"):
         result['socials'] = enabled
         newConfig = json.dumps(result)
 
-        await saveData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
         return await ctx.respond(f"Socials is now {'enabled' if result['socials'] else 'disabled'}.")
 
 
