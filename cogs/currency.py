@@ -35,7 +35,21 @@ class Currency(commands.Cog, name="currency"):
         await createCooldown(ctx, 24)
         dailyAmount = random.randint(300, 500)
         await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, dailyAmount, 0, dailyAmount])
-        return await ctx.respond(f'Congratulations! You got {dailyAmount}.')
+        return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.')
+
+    @slash_command()
+    @option("amount", int, description="The amount to deposit onto your bank", required=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def deposit(self, ctx, amount):
+        """ Deposit money onto your bank """
+        cash_balance = (await selector('SELECT cash FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        print(cash_balance)
+        if amount > cash_balance:
+            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.")
+
+        await modifyData('UPDATE economy SET cash = cash - %s, bank = bank + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+
+        return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!")
 
 
 def setup(bot):
