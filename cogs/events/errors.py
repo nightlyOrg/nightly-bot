@@ -1,5 +1,4 @@
-import traceback
-import discord
+import discord, traceback
 from discord.ext import commands
 from utilities.data import Emotes, Colors, Links
 
