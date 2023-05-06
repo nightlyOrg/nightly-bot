@@ -47,7 +47,7 @@ class Currency(commands.Cog, name="currency"):
         if amount > cash_balance:
             return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.")
 
-        await modifyData('UPDATE economy SET cash = cash - %s, bank = bank + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+        await modifyData('UPDATE economy SET CASH = CASH - %s, BANK = BANK + %s WHERE UID = %s', [amount, amount, ctx.author.id])
 
         return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!")
 
