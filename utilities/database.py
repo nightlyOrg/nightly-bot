@@ -25,7 +25,7 @@ async def selector(query: str, variables: list):
     return result
 
 
-async def saveData(query: str, variables: list) -> None:
+async def modifyData(query: str, variables: list) -> None:
     cursor = await mysql_login()
     db = cursor.cursor()
     db.execute(query, variables)
