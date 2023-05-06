@@ -1,6 +1,6 @@
 import discord
 import random
-from discord import slash_command
+from discord import slash_command, option
 from discord.ext import commands
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
