@@ -21,7 +21,6 @@ async def selector(query: str, variables: list):
         return ()
     db.close()
     cursor.close()
-    print(result)
     return result
 
 
@@ -43,7 +42,6 @@ async def checkCooldown(ctx):
     currentTime = round(time.time())
     await mysql_login()
     cooldown = await selector("SELECT cooldown FROM cooldowns WHERE UID = %s AND command = %s", [ctx.author.id, ctx.command.name])
-    print(cooldown)
     if not cooldown:
         return True
     elif cooldown:
