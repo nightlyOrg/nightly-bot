@@ -1,8 +1,9 @@
 import discord
 import psutil
-from discord import slash_command
+from discord import slash_command, option
 from discord.ext import commands
 from utilities.data import Colors, Links
+import json
 
 
 class Utility(commands.Cog, name="utility"):
@@ -55,6 +56,33 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
         features = ", ".join(guild.features).replace("_", " ").title()
         embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
+
+    @slash_command()
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @option("text", str, description="What do you want to tell / ask Nightly?")
+    async def gpt(self, ctx, text):
+        """ Talk to Paw! """
+        await ctx.defer()
+        url = "https://free.churchless.tech/v1/chat/completions"
+        adata = {
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "system", "content": f"""{data.gaslight} The user's name is {ctx.author.display_name}. Do not use the user's full name, use their call name derived from their full name."""},
+                         {"role": "user", "content": text}],
+            "max_tokens": 500
+        }
+        headers = {
+            "Content-Type": "application/json"
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, data=json.dumps(adata)) as response:
+                if response.status == 200:
+                    response_json = await response.json()
+                    content = response_json["choices"][0]["message"]["content"]
+                    await ctx.respond(f"""**Prompt:** {text}\n**Paw**: {content}""")
+                elif response.status == 500:
+                    await ctx.respond("Something went wrong with the API, try again")
+                else:
+                    await ctx.respond("Error: API call failed with status code", response.status)
 
 
 def setup(bot):
