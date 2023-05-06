@@ -1,5 +1,6 @@
 from config import database
 import mysql.connector as mysql
+import time
 
 
 async def mysql_login():
