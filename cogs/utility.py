@@ -4,6 +4,7 @@ from discord import slash_command, option
 from discord.ext import commands
 from utilities.data import Colors, Links
 import json
+import aiohttp
 
 
 class Utility(commands.Cog, name="utility"):
