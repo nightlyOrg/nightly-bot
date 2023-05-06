@@ -33,7 +33,7 @@ class Currency(commands.Cog, name="currency"):
         if cooldownStatus is not True:
             return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldownStatus}:f>')
         await createCooldown(ctx, 24)
-        dailyAmount = random.randint(300, 500)
+        dailyAmount = random.uniform(300, 500)
         await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, dailyAmount, 0, dailyAmount])
         return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.')
 
