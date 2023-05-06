@@ -36,7 +36,7 @@ async def on_connect():
     print('Connected to database\nCreating the required tables if necessary')
     database.execute("CREATE TABLE IF NOT EXISTS settings (GUILD VARCHAR(20) PRIMARY KEY, config JSON)")
     database.execute("CREATE TABLE IF NOT EXISTS economy (UID VARCHAR(20) PRIMARY KEY, CASH FLOAT SIGNED, BANK FLOAT SIGNED)")
-    database.execute("CREATE TABLE IF NOT EXISTS cooldowns (UID VARCHAR(20) PRIMARY KEY, command VARCHAR(20) KEY, cooldown INT)")
+    database.execute("CREATE TABLE IF NOT EXISTS cooldowns (UID VARCHAR(20) PRIMARY KEY, command VARCHAR(20), cooldown INT)")
     print('Tables have been created')
     database.close()
 
