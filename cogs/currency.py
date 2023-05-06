@@ -51,6 +51,23 @@ class Currency(commands.Cog, name="currency"):
 
         return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!")
 
+    @slash_command()
+    @option("amount", int, description="The amount to withdraw from your bank", required=True)
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def withdraw(self, ctx, amount):
+        """ Withdraw money from your bank """
+        try:
+            cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+            print(cash_balance)
+            if amount > cash_balance:
+                return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.")
+
+            await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+
+            return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!")
+        except Exception as e:
+            return await ctx.respond(e)
+
 
 def setup(bot):
     bot.add_cog(Currency(bot))
