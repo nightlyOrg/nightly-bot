@@ -1,5 +1,4 @@
-import traceback
-import discord
+import discord, traceback
 from discord.ext import commands
 from utilities.data import Emotes, Colors, Links
 
@@ -33,8 +32,8 @@ class Error(commands.Cog, name="Error"):
         else:
             embed = discord.Embed(colour=Colors.red)
             embed.description = f"You can join our support discord [here]({Links.discord})"
-            print(traceback.format_exception(err))
-            return await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this to my developers.", embed=embed)
+            await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this.", embed=embed)
+            raise Exception(''.join(traceback.format_exception(type(err), err, err.__traceback__)))
 
 
 def setup(bot):

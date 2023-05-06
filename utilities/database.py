@@ -1,5 +1,6 @@
 from config import database
 import mysql.connector as mysql
+import time
 
 
 async def mysql_login():
@@ -20,14 +21,32 @@ async def selector(query: str, variables: list):
         return ()
     db.close()
     cursor.close()
-    print(result)
     return result
 
 
-async def saveData(query: str, variables: list) -> None:
+async def modifyData(query: str, variables: list) -> None:
     cursor = await mysql_login()
     db = cursor.cursor()
     db.execute(query, variables)
     cursor.commit()
     db.close()
     cursor.close()
+
+
+async def createCooldown(ctx, hours: int):
+    newTime = round(time.time()) + hours * 60 * 60
+    await modifyData("INSERT INTO cooldowns (UID, command, cooldown) VALUES (%s, %s, %s)", [ctx.author.id, ctx.command.name, newTime])
+
+
+async def checkCooldown(ctx):
+    currentTime = round(time.time())
+    await mysql_login()
+    cooldown = await selector("SELECT cooldown FROM cooldowns WHERE UID = %s AND command = %s", [ctx.author.id, ctx.command.name])
+    if not cooldown:
+        return True
+    elif cooldown:
+        if currentTime > cooldown[0]:
+            await modifyData("DELETE FROM cooldowns WHERE UID = %s AND command = %s", [ctx.author.id, ctx.command.name])
+            return True
+        else:
+            return cooldown[0]
