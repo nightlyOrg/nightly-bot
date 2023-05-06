@@ -31,11 +31,11 @@ class Currency(commands.Cog, name="currency"):
     async def daily(self, ctx):
         cooldownStatus = await checkCooldown(ctx)
         if cooldownStatus is not True:
-            return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldownStatus}:f>')
+            return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldownStatus}:f>', ephemeral=True)
         await createCooldown(ctx, 24)
         dailyAmount = random.uniform(300, 500)
         await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, dailyAmount, 0, dailyAmount])
-        return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.')
+        return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.', ephemeral=True)
 
     @slash_command()
     @option("amount", int, description="The amount to deposit onto your bank", required=True)
@@ -45,11 +45,11 @@ class Currency(commands.Cog, name="currency"):
         cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         print(cash_balance)
         if amount > cash_balance:
-            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.")
+            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
 
         await modifyData('UPDATE economy SET CASH = CASH - %s, BANK = BANK + %s WHERE UID = %s', [amount, amount, ctx.author.id])
 
-        return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!")
+        return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!", ephemeral=True)
 
     @slash_command()
     @option("amount", int, description="The amount to withdraw from your bank", required=True)
@@ -60,11 +60,11 @@ class Currency(commands.Cog, name="currency"):
             cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
             print(cash_balance)
             if amount > cash_balance:
-                return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.")
+                return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
 
             await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
 
-            return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!")
+            return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
         except Exception as e:
             return await ctx.respond(e)
 
