@@ -5,6 +5,7 @@ from discord.ext import commands
 from utilities.data import Colors, Links
 import json
 import aiohttp
+from utilities.data import gaslight
 
 
 class Utility(commands.Cog, name="utility"):
@@ -62,12 +63,12 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
     @commands.cooldown(1, 60, commands.BucketType.user)
     @option("text", str, description="What do you want to tell / ask Nightly?")
     async def gpt(self, ctx, text):
-        """ Talk to Paw! """
+        """ Talk to Nightly! """
         await ctx.defer()
         url = "https://free.churchless.tech/v1/chat/completions"
         adata = {
             "model": "gpt-3.5-turbo",
-            "messages": [{"role": "system", "content": f"""{data.gaslight} The user's name is {ctx.author.display_name}. Do not use the user's full name, use their call name derived from their full name."""},
+            "messages": [{"role": "system", "content": f"""{gaslight} The user's name is {ctx.author.display_name}. Do not use the user's full name, use their call name derived from their full name."""},
                          {"role": "user", "content": text}],
             "max_tokens": 500
         }
@@ -79,7 +80,7 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
                 if response.status == 200:
                     response_json = await response.json()
                     content = response_json["choices"][0]["message"]["content"]
-                    await ctx.respond(f"""**Prompt:** {text}\n**Paw**: {content}""")
+                    await ctx.respond(f"""**Prompt:** {text}\n**Nightly**: {content}""")
                 elif response.status == 500:
                     await ctx.respond("Something went wrong with the API, try again")
                 else:
