@@ -1,3 +1,4 @@
 aiohttp==3.8.4
 py-cord==2.4.1
 mysql-connector-python==8.0.33
+psutil==5.9.5
