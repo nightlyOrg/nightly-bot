@@ -6,8 +6,8 @@ class Job():
 
     def __init__(self, name):
         self.work = {}
-        for job in Job():
-            if job.__getattribute__(name):
-                self.work = job
+        match name.lower():
+            case "trashman":
+                self.work = self.trashman
         self.min_pay = self.work["min_pay"]
         self.max_pay = self.work["max_pay"]
