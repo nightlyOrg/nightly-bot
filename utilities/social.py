@@ -71,6 +71,10 @@ async def mentionconverter(self, ctx, members):
     for member in members:
         member = await guild.fetch_member(member)
         memberlist.append(member)
+    if not memberlist:
+        return await ctx.respond('Sorry, but you need to specify someone with a mention.', ephemeral=True)
+    if len(memberlist) > 5:
+        return await ctx.respond('Sorry, but this command is limited to 5 people.', ephemeral=True)
     return memberlist
 
 
