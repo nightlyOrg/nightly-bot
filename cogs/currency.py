@@ -4,7 +4,7 @@ from discord import slash_command, option
 from discord.ext import commands
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
-from jobs import Job
+import jobs
 
 
 class Currency(commands.Cog, name="currency"):
@@ -70,11 +70,12 @@ class Currency(commands.Cog, name="currency"):
             return await ctx.respond(e)
 
     @slash_command()
-    @option("job", str, description="The job you want to work", required=True)
+    @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.jobnames)
     @commands.cooldown(1, 60, commands.BucketType.user)
     async def work(self, ctx, job):
         """ Work a job """
-        work = Job(job)
+        jobs = ["trashman"]
+        work = jobs.Job(job)
 
 
 def setup(bot):
