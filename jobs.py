@@ -18,11 +18,10 @@ class Job():
         self.success_chance = self.work["success_chance"]
         self.fail_message = self.work["fail_message"]
 
-
-def jobnames(ctx):
-    jobs = Job.joblist
-    autocomplete = []
-    for job in jobs:
-        if job.startswith(ctx.value.lower()):
-            autocomplete.append(job)
-    return autocomplete if autocomplete else jobs
+    def autocomplete(ctx):
+        jobs = Job.joblist
+        autocomplete = []
+        for job in jobs:
+            if job.startswith(ctx.value.lower()):
+                autocomplete.append(job)
+        return autocomplete if autocomplete else jobs

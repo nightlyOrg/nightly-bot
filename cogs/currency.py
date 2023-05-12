@@ -71,7 +71,7 @@ class Currency(commands.Cog, name="currency"):
             return await ctx.respond(e)
 
     @slash_command()
-    @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.jobnames)
+    @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.Job.autocomplete)
     @commands.cooldown(1, 60, commands.BucketType.user)
     async def work(self, ctx, job):
         """ Work a job """
