@@ -74,8 +74,7 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 60, commands.BucketType.user)
     async def work(self, ctx, job):
         """ Work a job """
-        work = Job("trashman")
-        print(work.max_pay)
+        work = Job(job)
 
 
 def setup(bot):
