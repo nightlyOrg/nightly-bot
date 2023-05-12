@@ -75,7 +75,7 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 60, commands.BucketType.user)
     async def work(self, ctx, job):
         """ Work a job """
-        if job.lower() not in jobs.Job.joblist:
+        if job.title() not in jobs.Job.joblist:
             return await ctx.respond("Please select a valid job", ephemeral=True)
         work = jobs.Job(job)
         if random.randint(0, 100) > work.success_chance:  # If job FAILS
