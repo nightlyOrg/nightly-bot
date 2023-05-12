@@ -5,6 +5,7 @@ from discord.ext import commands
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
 import jobs
+import utilities.data
 
 
 class Currency(commands.Cog, name="currency"):
@@ -74,8 +75,14 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 60, commands.BucketType.user)
     async def work(self, ctx, job):
         """ Work a job """
-        jobs = ["trashman"]
+        if job.lower() not in jobs.Job.joblist:
+            return await ctx.respond("Please select a valid job")
         work = jobs.Job(job)
+        if random.randint(0, 100) > work.success_chance:  # If job FAILS
+            return await ctx.respond(f"{utilities.data.Emotes.crossmark} {work.fail_message}")
+        else:
+            pay = random.randint(work.min_pay, work.max_pay)
+            return await ctx.respond(f"{utilities.data.Emotes.checkmark} You did your job well!\nPay: {pay} {utilities.data.Emotes.cash}")
 
 
 def setup(bot):
