@@ -76,20 +76,16 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
             "Content-Type": "application/json"
         }
         retries = 0
-        responded = False
-        while retries < 3:
+        while retries < 4:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, headers=headers, data=json.dumps(adata)) as response:
                     if response.status == 200:
                         response_json = await response.json()
                         content = response_json["choices"][0]["message"]["content"]
-                        await ctx.respond(f"""**Prompt:** {text}\n**Paw:** {content}""")
-                        responded = True
-                        break
+                        return await ctx.respond(f"""**Prompt:** {text}\n**Paw:** {content}""")
                     else:
                         retries += 1
-        if not responded:
-            ctx.respond("Sorry, there has been an API error. Please try again.")
+        await ctx.respond("Sorry, there has been an API error. Please try again.")
 
 
 def setup(bot):
