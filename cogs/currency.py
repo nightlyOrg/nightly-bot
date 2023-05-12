@@ -76,7 +76,7 @@ class Currency(commands.Cog, name="currency"):
     async def work(self, ctx, job):
         """ Work a job """
         if job.lower() not in jobs.Job.joblist:
-            return await ctx.respond("Please select a valid job")
+            return await ctx.respond("Please select a valid job", ephemeral=True)
         work = jobs.Job(job)
         if random.randint(0, 100) > work.success_chance:  # If job FAILS
             return await ctx.respond(f"{utilities.data.Emotes.crossmark} {work.fail_message}")
