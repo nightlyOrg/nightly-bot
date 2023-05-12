@@ -75,16 +75,21 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
         headers = {
             "Content-Type": "application/json"
         }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, data=json.dumps(adata)) as response:
-                if response.status == 200:
-                    response_json = await response.json()
-                    content = response_json["choices"][0]["message"]["content"]
-                    await ctx.respond(f"""**Prompt:** {text}\n**Nightly**: {content}""")
-                elif response.status == 500:
-                    await ctx.respond("Something went wrong with the API, try again")
-                else:
-                    await ctx.respond("Error: API call failed with status code", response.status)
+        retries = 0
+        responded = False
+        while retries < 3:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url, headers=headers, data=json.dumps(adata)) as response:
+                    if response.status == 200:
+                        response_json = await response.json()
+                        content = response_json["choices"][0]["message"]["content"]
+                        await ctx.respond(f"""**Prompt:** {text}\n**Paw:** {content}""")
+                        responded = True
+                        break
+                    else:
+                        retries += 1
+        if not responded:
+            ctx.respond("Sorry, there has been an API error. Please try again.")
 
 
 def setup(bot):
