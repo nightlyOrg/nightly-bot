@@ -85,7 +85,7 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
                         return await ctx.respond(f"""**Prompt:** {text}\n**Paw:** {content}""")
                     else:
                         retries += 1
-        await ctx.respond("Sorry, there has been an API error. Please try again.")
+        await ctx.respond("Sorry, there has been an API error. Please try again!")
 
 
 def setup(bot):
