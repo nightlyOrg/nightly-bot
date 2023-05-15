@@ -79,12 +79,9 @@ class Currency(commands.Cog, name="currency"):
         work = jobs.Job(job)
         if random.randint(0, 100) > work.success_chance:  # If job FAILS
             return await ctx.respond(f"{Emotes.crossmark} {work.fail_message}")
-        else:
-            pay = random.randint(work.min_pay, work.max_pay)
-            if not await selector('SELECT * FROM economy WHERE UID = %s', [ctx.author.id]):
-                await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, 0, 0)", [ctx.author.id])
-            await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [pay, ctx.author.id])
-            return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
+        pay = random.randint(work.min_pay, work.max_pay)
+        await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, pay, pay])
+        return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
 
 
 def setup(bot):
