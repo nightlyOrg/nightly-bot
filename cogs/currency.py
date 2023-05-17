@@ -4,7 +4,7 @@ from discord import slash_command, option
 from discord.ext import commands
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
-import jobs
+import utilities.jobs as jobs
 
 
 class Currency(commands.Cog, name="currency"):
