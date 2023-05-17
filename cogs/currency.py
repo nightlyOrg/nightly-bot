@@ -4,6 +4,7 @@ from discord import slash_command, option
 from discord.ext import commands
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
+import utilities.jobs as jobs
 
 
 class Currency(commands.Cog, name="currency"):
@@ -42,7 +43,7 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def deposit(self, ctx, amount):
         """ Deposit money onto your bank """
-        cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        cash_balance = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         print(cash_balance)
         if amount > cash_balance:
             return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
@@ -67,6 +68,20 @@ class Currency(commands.Cog, name="currency"):
             return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
         except Exception as e:
             return await ctx.respond(e)
+
+    @slash_command()
+    @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.Job.autocomplete)
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    async def work(self, ctx, job):
+        """ Work a job """
+        if job.title() not in jobs.Job.joblist:
+            return await ctx.respond("Please select a valid job!", ephemeral=True)
+        work = jobs.Job(job)
+        if random.randint(0, 100) > work.success_chance:  # If job FAILS
+            return await ctx.respond(f"{Emotes.crossmark} {work.fail_message}")
+        pay = random.randint(work.min_pay, work.max_pay)
+        await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, pay, pay])
+        return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
 
 
 def setup(bot):
