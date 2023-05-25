@@ -67,7 +67,7 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
         await ctx.defer()
         url = "https://free.churchless.tech/v1/chat/completions"
         adata = {
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4",
             "messages": [{"role": "system", "content": f"""{gaslight} The user's name is {ctx.author.display_name}. Do not use the user's full name, use their call name derived from their full name."""},
                          {"role": "user", "content": text}],
             "max_tokens": 500
