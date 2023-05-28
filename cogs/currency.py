@@ -85,8 +85,10 @@ class Currency(commands.Cog, name="currency"):
 
     @slash_command()
     @option("user", discord.User, description="Who you want to pay")
-    @option("amount", int, description="The amount of money you want to pay")
+    @option("amount", int, description="The amount of money you want to pay", min_value=1)
     async def pay(self, ctx, user, amount):
+        if ctx.author == user:
+            return await ctx.respond("You can't pay yourself!", ephemeral=True)
         cash = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         if cash < amount:
             return await ctx.respond("You don't have enough money in cash!", ephemeral=True)
