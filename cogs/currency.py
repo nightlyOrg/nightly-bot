@@ -90,9 +90,9 @@ class Currency(commands.Cog, name="currency"):
         cash = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         if cash < amount:
             return await ctx.respond("You don't have enough money in either cash or your bank!", ephemeral=True)
-        await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
         if not (await selector('SELECT BANK FROM economy WHERE UID = %s', [user.id]))[0]:
             return await ctx.respond("That user has not made an account yet!", ephemeral=True)
+        await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
         await modifyData('UPDATE economy SET CASH = CASH - %s WHERE UID = %s', [amount, ctx.author.id])
         await ctx.respond(f"You just paid {user.mention} `{amount}` {Emotes.cash}\nNew Balance: `{cash-amount}` {Emotes.cash}")
 
