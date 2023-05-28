@@ -87,14 +87,14 @@ class Currency(commands.Cog, name="currency"):
     @option("user", discord.User, description="Who you want to pay")
     @option("amount", int, description="The amount of money you want to pay")
     async def pay(self, ctx, user, amount):
-        cash = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        cash = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         if cash < amount:
-            return await ctx.respond("You don't have enough money in either cash or your bank!", ephemeral=True)
-        if not (await selector('SELECT BANK FROM economy WHERE UID = %s', [user.id]))[0]:
+            return await ctx.respond("You don't have enough money in cash or your bank!", ephemeral=True)
+        if not await selector('SELECT CASH FROM economy WHERE UID = %s', [user.id]):
             return await ctx.respond("That user has not made an account yet!", ephemeral=True)
         await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
         await modifyData('UPDATE economy SET CASH = CASH - %s WHERE UID = %s', [amount, ctx.author.id])
-        await ctx.respond(f"You just paid {user.mention} `{amount}` {Emotes.cash}\nNew Balance: `{cash-amount}` {Emotes.cash}")
+        await ctx.respond(f"You just paid {user.mention} {Emotes.cash} `{amount}`\nNew Balance: {Emotes.cash} `{cash-amount}`")
 
 
 def setup(bot):
