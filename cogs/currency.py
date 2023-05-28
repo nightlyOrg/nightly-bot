@@ -89,7 +89,7 @@ class Currency(commands.Cog, name="currency"):
     async def pay(self, ctx, user, amount):
         cash = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
         if cash < amount:
-            return await ctx.respond("You don't have enough money in cash or your bank!", ephemeral=True)
+            return await ctx.respond("You don't have enough money in cash!", ephemeral=True)
         if not await selector('SELECT CASH FROM economy WHERE UID = %s', [user.id]):
             return await ctx.respond("That user has not made an account yet!", ephemeral=True)
         await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
