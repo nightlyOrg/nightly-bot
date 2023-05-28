@@ -83,6 +83,19 @@ class Currency(commands.Cog, name="currency"):
         await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, pay, pay])
         return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
 
+    @slash_command()
+    @option("user", discord.User, description="Who you want to pay")
+    @option("amount", int, description="The amount of money you want to pay")
+    async def pay(self, ctx, user, amount):
+        cash = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        if cash < amount:
+            return await ctx.respond("You don't have enough money in either cash or your bank!", ephemeral=True)
+        await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
+        if not (await selector('SELECT BANK FROM economy WHERE UID = %s', [user.id]))[0]:
+            return await ctx.respond("That user has not made an account yet!", ephemeral=True)
+        await modifyData('UPDATE economy SET CASH = CASH - %s WHERE UID = %s', [amount, ctx.author.id])
+        await ctx.respond(f"You just paid {user.mention} `{amount}` {Emotes.cash}\nNew Balance: `{cash-amount}` {Emotes.cash}")
+
 
 def setup(bot):
     bot.add_cog(Currency(bot))
