@@ -6,6 +6,8 @@ from utilities.data import Colors, Links
 import json
 import aiohttp
 from utilities.data import gaslight
+import zipfile
+import os
 
 
 class Utility(commands.Cog, name="utility"):
@@ -58,6 +60,21 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
         features = ", ".join(guild.features).replace("_", " ").title()
         embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
+
+    @slash_command(brief="Get all server stickers & emojis!")
+    @discord.default_permissions(manage_guild=True)
+    @commands.cooldown(1, 600, commands.BucketType.user)
+    async def emoji_downloader(self, ctx):
+        await ctx.defer()
+        with zipfile.ZipFile('emoji_and_stickers.zip', 'w') as zipped_f:
+            for emoji in ctx.guild.emojis:
+                zipped_f.writestr(emoji.name + emoji.url[-4:], await emoji.read())
+            for sticker in await ctx.guild.fetch_stickers():
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url=sticker.url) as response:
+                        zipped_f.writestr(sticker.name + ".png", await response.read())
+        await ctx.respond("Here are all emojis and stickers of this guild!", file=discord.File("emoji_and_stickers.zip"))
+        os.remove("emoji_and_stickers.zip")
 
     @slash_command()
     @commands.cooldown(1, 60, commands.BucketType.user)
