@@ -6,6 +6,9 @@ from utilities.data import Colors, Links
 import json
 import aiohttp
 from utilities.data import gaslight
+import zipfile
+import os
+import asyncio
 
 
 class Utility(commands.Cog, name="utility"):
@@ -58,6 +61,25 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
         features = ", ".join(guild.features).replace("_", " ").title()
         embed.add_field(name="Features", value=features)
         await ctx.respond(embed=embed)
+
+    @slash_command(brief="Get all server stickers & emojis!")
+    @discord.default_permissions(manage_guild=True)
+    async def emoji_downloader(self, ctx):
+        total = len(ctx.guild.emojis) + len(ctx.guild.stickers)
+        current = 0
+        message = await ctx.respond(f"Downloading, this might take some time... (0 of {total})")
+        with zipfile.ZipFile('emoji_and_stickers.zip', 'w') as zipped_f:
+            for emoji in ctx.guild.emojis:
+                zipped_f.writestr(emoji.name + emoji.url[-4:], await emoji.read())
+                current += 1
+                await message.edit_original_response(content=f"Downloading, this might take some time... ({current} of {total})")
+                await asyncio.sleep(1)
+            for sticker in await ctx.guild.fetch_stickers():
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url=sticker.url) as response:
+                        zipped_f.writestr(sticker.name + ".png", await response.read())
+        await message.edit_original_response(content="Here are all emojis and stickers of this guild!", file=discord.File("emoji_and_stickers.zip"))
+        os.remove("emoji_and_stickers.zip")
 
     @slash_command()
     @commands.cooldown(1, 60, commands.BucketType.user)
