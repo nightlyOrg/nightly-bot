@@ -2,7 +2,7 @@ import json
 import traceback
 from datetime import datetime
 from discord.ext import commands
-from utilities.database import mysql_login
+from utilities.database import mysql_login, selector, modifyData
 
 
 # from cogs.admin import admin_only
