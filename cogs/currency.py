@@ -19,10 +19,6 @@ class Currency(commands.Cog, name="currency"):
 
         result = await selector("SELECT cash, bank FROM economy WHERE UID = %s", [ctx.author.id])
 
-        if not result:
-            result = (0, 0)
-            embed.add_field(name="WARNING", value="***Please make sure you agree to our [privacy policy](https://github.com/MiataBoy) before continuing.***\nThis warning will disappear when you earn money.")
-
         embed.description = f"You have {Emotes.cash} `{f'{round(result[0], 2):_}'.replace('_', '.')}` in your wallet\nYou have {Emotes.bankCard} `{f'{round(result[1], 2):_}'.replace('_', '.')}` in your bank"
 
         return await ctx.respond(embed=embed, ephemeral=True)
@@ -84,21 +80,14 @@ class Currency(commands.Cog, name="currency"):
         return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
 
     @slash_command()
-    @option("user", discord.User, description="Who you want to pay")
+    @option("user", discord.User, description="The person that receives the payment")
     @option("amount", int, description="The amount of money you want to pay", min_value=1)
     async def pay(self, ctx, user, amount):
         if ctx.author == user:
-            return await ctx.respond("You can't pay yourself!", ephemeral=True)
-        if not await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]):
-            await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, 0, 0)", [ctx.author.id])
-        cash = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
-        if cash < amount:
-            return await ctx.respond("You don't have enough money in cash!", ephemeral=True)
-        if not await selector('SELECT CASH FROM economy WHERE UID = %s', [user.id]):
-            return await ctx.respond("That user has not made an account yet!", ephemeral=True)
-        await modifyData('UPDATE economy SET CASH = CASH + %s WHERE UID = %s', [amount, user.id])
-        await modifyData('UPDATE economy SET CASH = CASH - %s WHERE UID = %s', [amount, ctx.author.id])
-        await ctx.respond(f"You just paid {user.mention} {Emotes.cash} `{amount}`\nNew Balance: {Emotes.cash} `{cash-amount}`")
+            return await ctx.respond("You already own the money you are attempting to pay yourself...", ephemeral=True)
+        if (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id])) < amount:
+            return await ctx.respond(f"You do not have {amount} in cash.", ephemeral=True)
+        await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [user.id, amount, amount])
 
 
 def setup(bot):
