@@ -55,7 +55,7 @@ async def on_ready():
 
 @bot.check
 async def block_disabled_commands(ctx):
-    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
     result = json.loads(result)
 
     cog = ctx.cog.__class__.__name__
