@@ -1,7 +1,6 @@
 import discord
 import json
 from discord import Intents, Status, Activity, ActivityType
-from discord.ext import commands
 
 from config import token
 from utilities.database import mysql_login, selector
@@ -9,17 +8,6 @@ from utilities.database import mysql_login, selector
 intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
                   activity=Activity(type=ActivityType.watching, name="you"))
-
-
-class MyNewHelp(commands.MinimalHelpCommand):
-    async def send_pages(self):
-        destination = self.get_destination()
-        for page in self.paginator.pages:
-            emby = discord.Embed(description=page)
-            await destination.send(embed=emby)
-
-
-bot.help_command = MyNewHelp()
 
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
