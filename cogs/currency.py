@@ -53,17 +53,15 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def withdraw(self, ctx, amount):
         """ Withdraw money from your bank """
-        try:
-            cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
-            print(cash_balance)
-            if amount > cash_balance:
-                return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
+        cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        print(cash_balance)
+        if amount > cash_balance:
+            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
 
-            await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+        await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
 
-            return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
-        except Exception as e:
-            return await ctx.respond(e)
+        return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
+
 
     @slash_command()
     @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.Job.autocomplete)
