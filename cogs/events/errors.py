@@ -35,7 +35,7 @@ class Error(commands.Cog, name="Error"):
         else:
             embed = discord.Embed(colour=Colors.red)
             embed.description = f"You can join our support discord [here]({Links.discord})"
-            await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this.", embed=embed)
+            await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this.", embed=embed, ephemeral=True)
             raise Exception(''.join(traceback.format_exception(type(err), err, err.__traceback__)))
 
 
