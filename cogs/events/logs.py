@@ -2,7 +2,7 @@ import json
 import traceback
 from datetime import datetime
 from discord.ext import commands
-from utilities.database import mysql_login
+from utilities.database import selector, modifyData
 
 
 # from cogs.admin import admin_only
@@ -27,12 +27,8 @@ class Logs(commands.Cog, name="Logs"):
         configuration = json.dumps(configuration)
 
         try:
-            cursor = await mysql_login()
-            database = cursor.cursor()
-            database.execute("INSERT INTO settings (GUILD, config) VALUES (%s, %s)", [guild.id, configuration])
-            cursor.commit()
-            database.close()
-            cursor.close()
+            await modifyData("INSERT INTO settings (GUILD, config) VALUES (%s, %s)", [guild.id, configuration])
+
         except Exception as error:
             print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Received fatal connection | Could not complete operation")
             traceback.print_tb(error.__traceback__)
@@ -46,12 +42,7 @@ class Logs(commands.Cog, name="Logs"):
         print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Deleting configuration settings from database...")
 
         try:
-            cursor = await mysql_login()
-            database = cursor.cursor()
-            database.execute("DELETE FROM settings WHERE GUILD = %s", [guild.id])
-            cursor.commit()
-            database.close()
-            cursor.close()
+            await modifyData("DELETE FROM settings WHERE GUILD = %s", [guild.id])
         except Exception as error:
             print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Received fatal connection | Could not complete operation")
             traceback.print_tb(error.__traceback__)
