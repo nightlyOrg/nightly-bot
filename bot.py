@@ -53,7 +53,6 @@ async def block_disabled_commands(ctx):
     elif cog.lower() in result and result[cog.lower()]:
         return True
     else:
-        await ctx.respond(f'{cog} is disabled here.', ephemeral=True)
         return False
 
 bot.run(token)
