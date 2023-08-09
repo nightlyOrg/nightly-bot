@@ -14,10 +14,6 @@ class Logs(commands.Cog, name="Logs"):
     @commands.Cog.listener()
     async def on_application_command(self, ctx):
         if ctx.guild:
-            if (await selector("SELECT * FROM settings WHERE GUILD = %s", [ctx.guild.id])) == ():
-                configuration = {'currency': True, 'socials': True}
-                configuration = json.dumps(configuration)
-                await modifyData("INSERT INTO settings (GUILD, config) VALUES (%s, %s)", [ctx.guild.id, configuration])
             print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - {ctx.guild.name} | {ctx.author} > {ctx.command}")
         else:
             print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Direct Messages | {ctx.author} > {ctx.command}")
