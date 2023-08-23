@@ -7,7 +7,7 @@ from utilities.database import mysql_login, selector, modifyData
 from datetime import datetime
 intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
-                  activity=Activity(type=ActivityType.watching, name="you", ))
+                  activity=Activity(type=ActivityType.watching, name="you"))
 
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
