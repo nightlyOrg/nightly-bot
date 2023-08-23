@@ -42,6 +42,11 @@ async def on_ready():
 
 
 @bot.check
+async def guild_only(ctx):
+    return ctx.guild is not None
+
+
+@bot.check
 async def block_disabled_commands(ctx):
     result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
     if result == ():
