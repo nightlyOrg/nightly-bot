@@ -29,10 +29,15 @@ class Error(commands.Cog, name="Error"):
         if isinstance(err, discord.NotFound):
             return await ctx.respond(f"{Emotes.confused} I could not find the argument you have provided.", ephemeral=True)
 
+        if isinstance(err, discord.errors.CheckFailure):
+            if not ctx.guild:
+                return await ctx.respond(f"{Emotes.crossmark} **This command can only be used in a server.**", ephemeral=True)
+            return await ctx.respond(f"{Emotes.crossmark} **{ctx.cog.__class__.__name__}** is disabled here.", ephemeral=True)
+
         else:
             embed = discord.Embed(colour=Colors.red)
             embed.description = f"You can join our support discord [here]({Links.discord})"
-            await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this.", embed=embed)
+            await ctx.respond(f"{Emotes.confused} An error has occurred. Please report this.", embed=embed, ephemeral=True)
             raise Exception(''.join(traceback.format_exception(type(err), err, err.__traceback__)))
 
 

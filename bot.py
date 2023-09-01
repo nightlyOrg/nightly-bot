@@ -1,25 +1,13 @@
 import discord
 import json
 from discord import Intents, Status, Activity, ActivityType
-from discord.ext import commands
 
 from config import token
-from utilities.database import mysql_login, selector
-
+from utilities.database import mysql_login, selector, modifyData
+from datetime import datetime
 intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
                   activity=Activity(type=ActivityType.watching, name="you"))
-
-
-class MyNewHelp(commands.MinimalHelpCommand):
-    async def send_pages(self):
-        destination = self.get_destination()
-        for page in self.paginator.pages:
-            emby = discord.Embed(description=page)
-            await destination.send(embed=emby)
-
-
-bot.help_command = MyNewHelp()
 
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
@@ -54,7 +42,18 @@ async def on_ready():
 
 
 @bot.check
+async def guild_only(ctx):
+    return ctx.guild is not None
+
+
+@bot.check
 async def block_disabled_commands(ctx):
+    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
+    if result == ():
+        configuration = {'currency': True, 'socials': True}
+        configuration = json.dumps(configuration)
+        await modifyData("INSERT INTO settings (GUILD, config) VALUES (%s, %s)", [ctx.guild.id, configuration])
+        print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Corrected guild absence in settings upon command execution.")
     result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
     result = json.loads(result)
 
@@ -65,7 +64,6 @@ async def block_disabled_commands(ctx):
     elif cog.lower() in result and result[cog.lower()]:
         return True
     else:
-        await ctx.respond(f'{cog} is disabled here.', ephemeral=True)
         return False
 
 bot.run(token)
