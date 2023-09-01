@@ -86,8 +86,9 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
     @option("text", str, description="What do you want to tell / ask Nightly?")
     async def gpt(self, ctx, text):
         """ Talk to Nightly! """
+        return await ctx.respond("This command is disabled indefinitely.", ephemeral=True)
         await ctx.defer()
-        url = "https://free.churchless.tech/v1/chat/completions"
+        url = "GPT-API-URL-HERE"
         adata = {
             "model": "gpt-4",
             "messages": [{"role": "system", "content": f"""{gaslight} The user's name is {ctx.author.display_name}. Do not use the user's full name, use their call name derived from their full name."""},
