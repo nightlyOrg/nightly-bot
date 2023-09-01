@@ -1,9 +1,9 @@
-from discord.commands import SlashCommandGroup
-from discord.ext import commands
-from utilities.database import selector, modifyData
-from utilities.data import Colors
 import json
 import discord
+from discord.commands import SlashCommandGroup
+from discord.ext import commands
+from utilities.data import Colors
+from utilities.database import modifyData, selector
 
 
 class Settings(commands.Cog, name="settings"):

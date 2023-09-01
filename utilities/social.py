@@ -1,5 +1,5 @@
-import aiohttp
 import random
+import aiohttp
 import discord
 
 

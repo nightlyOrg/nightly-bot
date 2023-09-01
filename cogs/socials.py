@@ -1,4 +1,4 @@
-from discord import slash_command, option
+from discord import option, slash_command
 from discord.ext import commands
 import data
 from utilities.social import *

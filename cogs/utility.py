@@ -1,14 +1,13 @@
+import asyncio
+import json
+import os
+import zipfile
+import aiohttp
 import discord
 import psutil
-from discord import slash_command, option
+from discord import option, slash_command
 from discord.ext import commands
-from utilities.data import Colors, Links
-import json
-import aiohttp
-from utilities.data import gaslight
-import zipfile
-import os
-import asyncio
+from utilities.data import Colors, Links, gaslight
 
 
 class Utility(commands.Cog, name="utility"):
