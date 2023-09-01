@@ -86,6 +86,7 @@ While {self.bot.user.name} is not yet complete, we are hard at work everyday to 
     @option("text", str, description="What do you want to tell / ask Nightly?")
     async def gpt(self, ctx, text):
         """ Talk to Nightly! """
+        return await ctx.respond("This command is disabled indefinitely.", ephemeral=True)
         await ctx.defer()
         url = "https://free.churchless.tech/v1/chat/completions"
         adata = {
