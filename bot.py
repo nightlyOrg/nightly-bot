@@ -48,7 +48,7 @@ async def guild_only(ctx):
 
 @bot.check
 async def block_disabled_commands(ctx):
-    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
+    result = await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
     if result == ():
         configuration = {'currency': True, 'socials': True}
         configuration = json.dumps(configuration)
