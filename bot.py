@@ -1,10 +1,10 @@
-import discord
 import json
-from discord import Intents, Status, Activity, ActivityType
-
-from config import token
-from utilities.database import mysql_login, selector, modifyData
 from datetime import datetime
+import discord
+from discord import Activity, ActivityType, Intents, Status
+from config import token
+from utilities.database import modifyData, mysql_login, selector
+
 intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
                   activity=Activity(type=ActivityType.watching, name="you"))
@@ -48,7 +48,7 @@ async def guild_only(ctx):
 
 @bot.check
 async def block_disabled_commands(ctx):
-    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
+    result = await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id])
     if result == ():
         configuration = {'currency': True, 'socials': True}
         configuration = json.dumps(configuration)

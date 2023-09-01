@@ -1,10 +1,11 @@
-import discord
 import random
-from discord import slash_command, option
+import discord
+from discord import option, slash_command
 from discord.ext import commands
-from utilities.database import selector, createCooldown, checkCooldown, modifyData
-from utilities.data import Colors, Emotes
 import utilities.jobs as jobs
+from utilities.data import Colors, Emotes
+from utilities.database import (checkCooldown, createCooldown, modifyData,
+                                selector)
 
 
 class Currency(commands.Cog, name="currency"):
@@ -61,7 +62,6 @@ class Currency(commands.Cog, name="currency"):
         await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
 
         return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
-
 
     @slash_command()
     @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.Job.autocomplete)
