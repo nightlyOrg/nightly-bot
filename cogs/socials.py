@@ -16,7 +16,6 @@ class Socials(commands.Cog, name="social"):
         memberlist = await mentionconverter(self, ctx, members)
         embed = await interactions(ctx, memberlist, "snuggled", data.snuggle)
         view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
-        view = InteractionsView(ctx, memberlist, "snuggled", "Snuggle", data.snuggle)
         await ctx.respond(embed=embed, view=view)
 
     @slash_command(brief="Hug someone")
@@ -232,7 +231,6 @@ class Socials(commands.Cog, name="social"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def gay(self, ctx, user, border=False, server_avatar=False):
         """ Gay overlay on avatar """
-        link = ""
         if not user:
             if ctx.message:  # additional check to make slash commands not break at .message.reference
                 if ctx.message.reference:

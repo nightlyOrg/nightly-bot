@@ -37,9 +37,9 @@ class Settings(commands.Cog, name="settings"):
         result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
         result = json.loads(result)
         result['currency'] = enabled
-        newConfig = json.dumps(result)
+        new_config = json.dumps(result)
 
-        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [new_config, ctx.guild.id])
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
 
     @settings.command()
@@ -49,9 +49,9 @@ class Settings(commands.Cog, name="settings"):
         result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
         result = json.loads(result)
         result['socials'] = enabled
-        newConfig = json.dumps(result)
+        new_config = json.dumps(result)
 
-        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [new_config, ctx.guild.id])
         return await ctx.respond(f"Socials is now {'enabled' if result['socials'] else 'disabled'}.")
 
 
