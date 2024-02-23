@@ -27,13 +27,13 @@ class Currency(commands.Cog, name="currency"):
     @slash_command(brief="Check your balance")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def daily(self, ctx):
-        cooldownStatus = await checkCooldown(ctx)
-        if cooldownStatus is not True:
-            return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldownStatus}:f>', ephemeral=True)
+        cooldown_status = await checkCooldown(ctx)
+        if cooldown_status is not True:
+            return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldown_status}:f>', ephemeral=True)
         await createCooldown(ctx, 24)
-        dailyAmount = random.uniform(300, 500)
-        await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, dailyAmount, 0, dailyAmount])
-        return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.', ephemeral=True)
+        daily_amount = random.uniform(300, 500)
+        await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, daily_amount, 0, daily_amount])
+        return await ctx.respond(f'Congratulations! You got {daily_amount:.2f}.', ephemeral=True)
 
     @slash_command()
     @option("amount", int, description="The amount to deposit onto your bank", required=True)
