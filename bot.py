@@ -3,7 +3,8 @@ import json
 from discord import Intents, Status, Activity, ActivityType
 from serviceProviders.migrationProvider import run_migrations
 
-from config import token
+from config.vault import token
+from config.app import Settings
 from serviceProviders.seedProvider import run_seeders
 from utilities.database import mysql_login, selector, modifyData
 from datetime import datetime
