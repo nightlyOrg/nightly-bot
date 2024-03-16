@@ -35,18 +35,18 @@ async def modifyData(query: str, variables: list) -> None:
 
 async def createCooldown(ctx, hours: int):
     newTime = round(time.time()) + hours * 60 * 60
-    await modifyData("INSERT INTO cooldowns (UID, command, cooldown) VALUES (%s, %s, %s)", [ctx.author.id, ctx.command.name, newTime])
+    await modifyData("INSERT INTO cooldowns (user_id, command, cooldown) VALUES (%s, %s, %s)", [ctx.author.id, ctx.command.name, newTime])
 
 
 async def checkCooldown(ctx):
     currentTime = round(time.time())
     await mysql_login()
-    cooldown = await selector("SELECT cooldown FROM cooldowns WHERE UID = %s AND command = %s", [ctx.author.id, ctx.command.name])
+    cooldown = await selector("SELECT cooldown FROM cooldowns WHERE user_id = %s AND command = %s", [ctx.author.id, ctx.command.name])
     if not cooldown:
         return True
     elif cooldown:
         if currentTime > cooldown[0]:
-            await modifyData("DELETE FROM cooldowns WHERE UID = %s AND command = %s", [ctx.author.id, ctx.command.name])
+            await modifyData("DELETE FROM cooldowns WHERE user_id = %s AND command = %s", [ctx.author.id, ctx.command.name])
             return True
         else:
             return cooldown[0]
