@@ -16,7 +16,7 @@ class Settings(commands.Cog, name="settings"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def overview(self, ctx):
         """ View your server's settings """
-        result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+        result = (await selector("SELECT config FROM settings WHERE guild_id = %s", [ctx.guild.id]))[0]
 
         result = json.loads(result)
         overview = ""
@@ -34,24 +34,24 @@ class Settings(commands.Cog, name="settings"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def currency(self, ctx, enabled: discord.SlashCommandOptionType.boolean):
         """ Disable or enable currency """
-        result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+        result = (await selector("SELECT config FROM settings WHERE guild_id = %s", [ctx.guild.id]))[0]
         result = json.loads(result)
         result['currency'] = enabled
         newConfig = json.dumps(result)
 
-        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE guild_id = %s", [newConfig, ctx.guild.id])
         return await ctx.respond(f"Currency is now {'enabled' if result['currency'] else 'disabled'}.")
 
     @settings.command()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def socials(self, ctx, enabled: discord.SlashCommandOptionType.boolean):
         """ Disable or enable social interactions """
-        result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+        result = (await selector("SELECT config FROM settings WHERE guild_id = %s", [ctx.guild.id]))[0]
         result = json.loads(result)
         result['socials'] = enabled
         newConfig = json.dumps(result)
 
-        await modifyData("UPDATE settings SET config = %s WHERE GUILD = %s", [newConfig, ctx.guild.id])
+        await modifyData("UPDATE settings SET config = %s WHERE guild_id = %s", [newConfig, ctx.guild.id])
         return await ctx.respond(f"Socials is now {'enabled' if result['socials'] else 'disabled'}.")
 
 
