@@ -1,4 +1,4 @@
-from config import database
+from config.vault import database
 import mysql.connector as mysql
 import time
 
