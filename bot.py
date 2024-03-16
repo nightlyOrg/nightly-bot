@@ -1,8 +1,10 @@
 import discord
 import json
 from discord import Intents, Status, Activity, ActivityType
+from serviceProviders.migrationProvider import run_migrations
 
 from config import token
+from serviceProviders.seedProvider import run_seeders
 from utilities.database import mysql_login, selector, modifyData
 from datetime import datetime
 intents = Intents(guilds=True)
