@@ -21,16 +21,11 @@ bot.load_extensions("cogs.events")
 
 @bot.listen()
 async def on_connect():
-    print('Connected to Discord!')
-    print('Connecting to database')
-    cursor = await mysql_login()
-    database = cursor.cursor()
-    print('Connected to database\nCreating the required tables if necessary')
-    database.execute("CREATE TABLE IF NOT EXISTS settings (GUILD VARCHAR(20) PRIMARY KEY, config JSON)")
-    database.execute("CREATE TABLE IF NOT EXISTS economy (UID VARCHAR(20) PRIMARY KEY, CASH FLOAT SIGNED, BANK FLOAT SIGNED)")
-    database.execute("CREATE TABLE IF NOT EXISTS cooldowns (UID VARCHAR(20) PRIMARY KEY, command VARCHAR(20), cooldown INT)")
-    print('Tables have been created')
-    database.close()
+    await run_migrations()
+    if is_seeding_enabled: await run_seeders()
+    print('-' * 50)
+    print('✓ Migrations finished successfully.')
+    print(f'✓ {bot.user} is connected to Discord.')
 
 
 @bot.listen()
