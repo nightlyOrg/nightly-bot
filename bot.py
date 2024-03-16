@@ -8,6 +8,9 @@ from config.app import Settings
 from serviceProviders.seedProvider import run_seeders
 from utilities.database import mysql_login, selector, modifyData
 from datetime import datetime
+
+is_seeding_enabled = Settings().get_setting("seeding")
+
 intents = Intents(guilds=True)
 bot = discord.Bot(intents=intents, status=Status.dnd,
                   activity=Activity(type=ActivityType.watching, name="you"))
