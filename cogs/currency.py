@@ -2,8 +2,11 @@ import discord
 import random
 from discord import slash_command, option
 from discord.ext import commands
+from discord.ext.commands import before_invoke
+
 from utilities.database import selector, createCooldown, checkCooldown, modifyData
 from utilities.data import Colors, Emotes
+from utilities.currency import memberEntryInDatabase
 import utilities.jobs as jobs
 
 
@@ -20,7 +23,7 @@ class Currency(commands.Cog, name="currency"):
         """ Check your balance """
         embed = discord.Embed(colour=Colors.blue)
 
-        result = await selector("SELECT cash, bank FROM economy WHERE UID = %s", [ctx.author.id])
+        result = await selector("SELECT cash, bank FROM economy WHERE user_id = %s", [ctx.author.id])
 
         embed.description = f"You have {Emotes.cash} `{f'{round(result[0], 2):_}'.replace('_', '.')}` in your wallet\nYou have {Emotes.bankCard} `{f'{round(result[1], 2):_}'.replace('_', '.')}` in your bank"
 
@@ -34,7 +37,10 @@ class Currency(commands.Cog, name="currency"):
             return await ctx.respond(f'Sorry, but you still have to wait till <t:{cooldownStatus}:f>', ephemeral=True)
         await createCooldown(ctx, 24)
         dailyAmount = random.uniform(300, 500)
-        await modifyData("INSERT INTO economy (UID,CASH, BANK) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, dailyAmount, 0, dailyAmount])
+        await modifyData(
+            "INSERT INTO economy (user_id,cash, bank) VALUES(%s, %s, %s) ON DUPLICATE KEY UPDATE cash = cash + %s",
+            [ctx.author.id, dailyAmount, 0, dailyAmount]
+        )
         return await ctx.respond(f'Congratulations! You got {dailyAmount:.2f}.', ephemeral=True)
 
     @slash_command()
@@ -42,12 +48,13 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def deposit(self, ctx, amount):
         """ Deposit money onto your bank """
-        cash_balance = (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        cash_balance = (await selector('SELECT cash FROM economy WHERE user_id = %s', [ctx.author.id]))[0]
         print(cash_balance)
         if amount > cash_balance:
-            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
+            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount - cash_balance):.2f} too short.", ephemeral=True)
 
-        await modifyData('UPDATE economy SET CASH = CASH - %s, BANK = BANK + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+        await modifyData('UPDATE economy SET cash = cash - %s, bank = bank + %s WHERE user_id = %s',
+                         [amount, amount, ctx.author.id])
 
         return await ctx.respond(f"You have deposited {amount:.2f} cash into your bank account!", ephemeral=True)
 
@@ -56,15 +63,16 @@ class Currency(commands.Cog, name="currency"):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def withdraw(self, ctx, amount):
         """ Withdraw money from your bank """
-        cash_balance = (await selector('SELECT BANK FROM economy WHERE UID = %s', [ctx.author.id]))[0]
+        cash_balance = (await selector('SELECT bank FROM economy WHERE user_id = %s', [ctx.author.id]))[0]
         print(cash_balance)
         if amount > cash_balance:
-            return await ctx.respond(f"You only have {cash_balance:.2f}. You are {(amount-cash_balance):.2f} too short.", ephemeral=True)
+            return await ctx.respond(
+                f"You only have {cash_balance:.2f}. You are {(amount - cash_balance):.2f} too short.", ephemeral=True)
 
-        await modifyData('UPDATE economy SET BANK = BANK - %s, CASH = CASH + %s WHERE UID = %s', [amount, amount, ctx.author.id])
+        await modifyData('UPDATE economy SET bank = bank - %s, cash = cash + %s WHERE user_id = %s',
+                         [amount, amount, ctx.author.id])
 
         return await ctx.respond(f"You have withdrawn {amount:.2f} cash from your bank account!", ephemeral=True)
-
 
     @slash_command()
     @option("job", str, description="The job you want to work", required=True, autocomplete=jobs.Job.autocomplete)
@@ -77,7 +85,9 @@ class Currency(commands.Cog, name="currency"):
         if random.randint(0, 100) > work.success_chance:  # If job FAILS
             return await ctx.respond(f"{Emotes.crossmark} {work.fail_message}")
         pay = random.randint(work.min_pay, work.max_pay)
-        await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [ctx.author.id, pay, pay])
+        await modifyData(
+            "INSERT INTO economy (user_id, cash, bank) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE cash = cash + %s",
+            [ctx.author.id, pay, pay])
         return await ctx.respond(f"{Emotes.checkmark} You did your job well!\nPay: {pay} {Emotes.cash}")
 
     @slash_command()
@@ -86,9 +96,11 @@ class Currency(commands.Cog, name="currency"):
     async def pay(self, ctx, user, amount):
         if ctx.author == user:
             return await ctx.respond("You already own the money you are attempting to pay yourself...", ephemeral=True)
-        if (await selector('SELECT CASH FROM economy WHERE UID = %s', [ctx.author.id])) < amount:
+        if (await selector('SELECT cash FROM economy WHERE user_id = %s', [ctx.author.id])) < amount:
             return await ctx.respond(f"You do not have {amount} in cash.", ephemeral=True)
-        await modifyData("INSERT INTO economy (UID, CASH, BANK) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE CASH = CASH + %s", [user.id, amount, amount])
+        await modifyData(
+            "INSERT INTO economy (user_id, cash, bank) VALUES(%s, %s, 0) ON DUPLICATE KEY UPDATE cash = cash + %s",
+            [user.id, amount, amount])
 
 
 def setup(bot):
