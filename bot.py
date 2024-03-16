@@ -42,13 +42,13 @@ async def guild_only(ctx):
 
 @bot.check
 async def block_disabled_commands(ctx):
-    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))
+    result = (await selector("SELECT config FROM settings WHERE guild_id = %s", [ctx.guild.id]))
     if result == ():
         configuration = {'currency': True, 'socials': True}
         configuration = json.dumps(configuration)
-        await modifyData("INSERT INTO settings (GUILD, config) VALUES (%s, %s)", [ctx.guild.id, configuration])
+        await modifyData("INSERT INTO settings (guild_id, config) VALUES (%s, %s)", [ctx.guild.id, configuration])
         print(f"{datetime.now().__format__('%a %d %b %y, %H:%M:%S')} - Corrected guild absence in settings upon command execution.")
-    result = (await selector("SELECT config FROM settings WHERE GUILD = %s", [ctx.guild.id]))[0]
+    result = (await selector("SELECT config FROM settings WHERE guild_id = %s", [ctx.guild.id]))[0]
     result = json.loads(result)
 
     cog = ctx.cog.__class__.__name__
