@@ -18,7 +18,6 @@ bot = discord.Bot(intents=intents, status=Status.dnd,
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
 print(bot.extensions)
-BOOTED = False
 
 
 @bot.listen()
@@ -37,14 +36,9 @@ async def on_connect():
 
 @bot.listen()
 async def on_ready():
-    global BOOTED
-    if BOOTED:
-        print("Reconnect(?)")
-    if not BOOTED:
-        # await bot.sync_commands() #You might need to uncomment this if the slash commands aren't appearing
-        print(f'Logged in as {bot.user}')
-        print('------')
-        BOOTED = True
+    # await bot.sync_commands() #You might need to uncomment this if the slash commands aren't appearing
+    print('-' * 50)
+    print(f'✓ Logged in as {bot.user} successfully.')
 
 
 @bot.check
