@@ -17,7 +17,6 @@ bot = discord.Bot(intents=intents, status=Status.dnd,
 
 bot.load_extensions("cogs")  # Loads all cogs in the cogs folder
 bot.load_extensions("cogs.events")
-print(bot.extensions)
 
 
 @bot.listen()
