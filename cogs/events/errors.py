@@ -10,6 +10,8 @@ class Error(commands.Cog, name="Error"):
 
     @commands.Cog.listener()
     async def on_application_command_error(self, ctx, err):
+        if isinstance(err, commands.NotOwner):
+            return await ctx.respond(f"{Emotes.crossmark} **You are not the owner of this bot.**", ephemeral=True)
         if isinstance(err, commands.CommandNotFound):
             return
 
