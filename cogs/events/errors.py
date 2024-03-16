@@ -1,6 +1,7 @@
-import discord, traceback
+import traceback
+import discord
 from discord.ext import commands
-from utilities.data import Emotes, Colors, Links
+from utilities.data import Colors, Emotes, Links
 
 
 class Error(commands.Cog, name="Error"):
