@@ -32,13 +32,15 @@ import os
 from config.directories import Directories
 from utilities.database import mysql_login
 
+migration_directory = Directories().get_directory("migrations")
+migration_files = os.listdir(migration_directory)
+
 
 async def run_migrations():
     """
     Collects all the migration files and dynamically loads the classes, retrieving the desired schema data
     """
-    migration_directory = Directories().get_directory("migrations")
-    migration_files = os.listdir(migration_directory)
+
     cursor = await mysql_login()
     database = cursor.cursor()
 
@@ -94,3 +96,35 @@ def migration_handler(query_string, database):
     :param database:
     """
     database.execute(query_string)
+
+
+async def kill_active_migrations():
+    """
+    Kills all active migrations
+    """
+    cursor = await mysql_login()
+    database = cursor.cursor()
+
+    for file in migration_files:
+        if not file.endswith(".py"):
+            continue
+
+        migration_name = file.split(".")[0]
+        migration_path = os.path.join(migration_directory, file)
+
+        spec = importlib.util.spec_from_file_location(migration_name, migration_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        if not hasattr(module, "Schema"):
+            raise AttributeError(f"Schema class not found in {migration_name}")
+
+        Schema = module.Schema
+
+        schema_name = Schema.getName(self=Schema)
+
+        print(f'Killing migration {schema_name}...')
+
+        database.execute(f"DROP TABLE IF EXISTS {schema_name}")
+
+        print(f'Killed migration {schema_name}.')
