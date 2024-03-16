@@ -26,11 +26,11 @@ async def on_connect():
     print('-' * 50)
     print('✓ Migrations finished successfully.')
     print(f'✓ {bot.user} is connected to Discord.')
+    # await bot.sync_commands(guild_ids=[1102269821170749573]) #You might need to uncomment this if the slash commands aren't appearing
 
 
 @bot.listen()
 async def on_ready():
-    # await bot.sync_commands() #You might need to uncomment this if the slash commands aren't appearing
     print('-' * 50)
     print(f'✓ Logged in as {bot.user} successfully.')
 
