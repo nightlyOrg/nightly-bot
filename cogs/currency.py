@@ -11,6 +11,9 @@ class Currency(commands.Cog, name="currency"):
     def __init__(self, bot):
         self.bot = bot
 
+    async def cog_before_invoke(self, ctx):
+        return await memberEntryInDatabase(ctx.author.id)
+
     @slash_command(brief="Check your balance")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def balance(self, ctx):
